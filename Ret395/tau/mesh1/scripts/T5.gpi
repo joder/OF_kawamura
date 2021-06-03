@@ -1,0 +1,25 @@
+if(ARGC!=2) {
+	print sprintf("Not enough arguments!\nUsage: gnuplot -c \"%s\" line_NAME.xy N\nExiting gnuplot", ARG0)
+	exit gnuplot
+}
+fn=ARG1
+col=ARG2+0
+
+load 'common.gpi'
+Pr=5
+
+set ylabel 'T^{+}'
+
+set output 'comp_T5.png'
+plot\
+  x notitle ls 5 \
+, KT5 u 2:($3/Pr) t 'Kawamura' ls 1 \
+, fn u (yp($1)):(-subst(column(col))/Pr) t 'Current' ls 2
+
+set output 'comp_T5_semilog.png'
+set logscale x
+replot
+
+set output 'comp_T5_log.png'
+set logscale xy
+replot

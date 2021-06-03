@@ -1,0 +1,16 @@
+Retau=395
+h=0.03025
+nu=1.74e-7
+
+KU='TS_1.dat'
+KT0025='uhf0025_TS_1.dat'
+KT071='uhf071_TS_1.dat'
+KT1='uhf1_TS_1.dat'
+KT2='uhf2_TS_1.dat'
+KT5='uhf5_TS_1.dat'
+KT7='uhf7_TS_1.dat'
+KT10='uhf10_TS_1.dat'
+Kk='TS.dat'
+Keps='eps.dat'
+Knut='TSeps.dat'
+
