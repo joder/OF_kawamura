@@ -24,40 +24,20 @@ momentumSource
     {
         U
         {
+            /*
+                nu    = 1.74e-7
+                h     = 0.03025
+                Retau = 395
+                rho   = 1
+                SUx   = rho*nu^2*Retau^2/h^3
+
+                SUx   = 1.706540308801108e-04
+            */
             explicit (1.706540308801108e-04 0 0);
             implicit 0;
         }
     }
 }
-/*
-momentumSource
-{
-    type            vectorCodedSource;
-    active          yes;
-    name            momentumSource;
-    selectionMode   all;
-    vectorCodedSourceCoeffs
-    {
-        selectionMode   all;
-        fields (U);
-        code
-        #{
-            /*
-            Source term is S = \frac {\rho \nu^2 \Rey_{\tau}^2}{h^3} \hat{\imath}
-            \rho        = 1       kg/m^3
-            \nu         = 1.74e-7 m^2/s
-            \Rey_{\tau} = 395
-            h           = 0.03025 m
-            S           = 1.706540308801108e-04 kg/m^2/s^2
-            //const scalarField& V = mesh_.V();
-            const vector u(1.706540308801108e-04, 0, 0)
-            vectorField& USource = eqn.source();
-            vectorField final(u)
-            USource += final;
-        #}
-    }
-}
-*/
 
 energySource
 {
