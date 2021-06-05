@@ -17,6 +17,7 @@ FoamFile
 dimensions      [0 0 0 1 0 0 0];
 
 internalField   uniform 600;
+enforcedBC      uniform 3.264462809917356e+02;
 
 boundaryField
 {
@@ -28,7 +29,7 @@ boundaryField
     bottom
     {
         type             fixedGradient;
-        gradient         uniform 3.264462809917355e+02;
+        gradient         $enforcedBC;
     }
     outlet
     {
@@ -38,7 +39,7 @@ boundaryField
     top
     {
         type             fixedGradient;
-        gradient         uniform 3.264462809917355e+02;
+        gradient         $enforcedBC;
     }
     frontAndBack
     {
