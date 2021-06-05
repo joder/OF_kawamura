@@ -72,10 +72,10 @@ energySource
             // and T_gradient is the gradient from the boundary condition
             // (together with the sign). Source in the above form and gradient
             // have the opposite sign!)
-            // Re_b = 13967
+            // Re_b = 24428
             // Pr = 0.025
-            // T_gradient = -3.264462809917355e+02
-            hSource += 1.869814740412318e+00*U.component(vector::X)*V;
+            // T_gradient = 5.289256198347108e+02
+            hSource += 1.732194595823517e+00*U.component(vector::X)*V;
         #};
 
         codeSetValue
