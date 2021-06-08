@@ -1,0 +1,19 @@
+load 'common.gpi'
+Pr=5
+col=11
+
+set ylabel 'T^{+}'
+
+set output 'comp_T5.png'
+plot\
+  x notitle ls lsT1 \
+, KT5 u 2:($3/Pr) w @wDNS t 'Kawamura' ls lsDNS \
+, for [i=1:4] srcp(i) u (yp($1)):(subst(column(col))/Pr) w @wMesh t titl(i) ls linstyl(i)
+
+set output 'comp_T5_semilog.png'
+set logscale x
+replot
+
+set output 'comp_T5_log.png'
+set logscale xy
+replot
