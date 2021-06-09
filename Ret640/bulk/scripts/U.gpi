@@ -5,7 +5,7 @@ set ylabel 'U^{+}'
 set output 'comp_U.png'
 plot\
   KU u 2:3 w @wDNS t 'Kawamura' ls lsDNS \
-, for [i=1:4] srcU(i) u (yp($1)):($2/utau) w @wMesh t titl(i) ls linstyl(i)
+, for [i=1:N] srcU(i) u (yp($1)):($2/utau) w @wMesh t titl(i) ls linstyl(i)
 
 set output 'comp_U_semilog.png'
 set logscale x

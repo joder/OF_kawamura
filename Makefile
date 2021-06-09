@@ -20,8 +20,8 @@ BULK:=$(addprefix bulk/,$(MESH))
 
 CASE395TAU:=$(addprefix Ret395/,$(TAU))
 CASE395BULK:=$(addprefix Ret395/,$(BULK))
-CASE640TAU:=$(addprefix Ret640/,$(TAU))
-CASE640BULK:=$(addprefix Ret640/,$(BULK))
+CASE640TAU:=$(addprefix Ret640/,$(TAU) tau/mesh5)
+CASE640BULK:=$(addprefix Ret640/,$(BULK) bulk/mesh5)
 CASES:=$(CASE395TAU) $(CASE395BULK) $(CASE640TAU) $(CASE640BULK)
 
 RESIDUALS:=$(addsuffix /postProcessing/residuals/0/residuals.png,$(CASES))
@@ -75,6 +75,12 @@ $(call residual, Ret640/bulk/mesh4): $(call residual, Ret640/bulk/mesh3)
 	$(call runcase, $(call casedir, $@),$(call casedir, $<))
 
 $(call residual, Ret640/tau/mesh4): $(call residual, Ret640/tau/mesh3)
+	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+
+$(call residual, Ret640/bulk/mesh5): $(call residual, Ret640/bulk/mesh4)
+	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+
+$(call residual, Ret640/tau/mesh5): $(call residual, Ret640/tau/mesh4)
 	$(call runcase, $(call casedir, $@),$(call casedir, $<))
 
 plots: $(RESIDUALS)

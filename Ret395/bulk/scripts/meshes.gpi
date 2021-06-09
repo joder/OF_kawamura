@@ -11,11 +11,13 @@ linstyl(i)=i+1
 wMesh="l"
 wDNS="p"
 lsDNS=1
-lsT1=6
+lsT1=7
+N=4
 
 set linestyle 1 lc rgb "black"
 set linestyle 2 lc rgb "red"
 set linestyle 3 lc rgb "blue"
 set linestyle 4 lc rgb "magenta"
 set linestyle 5 lc rgb "green"
-set linestyle 6 lc rgb "yellow"
+set linestyle 6 lc rgb "cyan"
+set linestyle 7 lc rgb "yellow"
