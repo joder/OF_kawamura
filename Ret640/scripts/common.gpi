@@ -1,0 +1,16 @@
+load 'parameters.gpi'
+load 'meshes.gpi'
+
+utau=nu/h*Retau
+
+yp(y)=y/h*Retau
+
+subst(x)=(($0==0?t0=x:x),x-t0)
+
+set xlabel 'y^{+}'
+set xrange [*:Retau]
+
+set key tmargin horizontal
+
+set terminal pngcairo enhanced
+
