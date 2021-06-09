@@ -77,8 +77,13 @@ $(call residual, Ret640/bulk/mesh4): $(call residual, Ret640/bulk/mesh3)
 $(call residual, Ret640/tau/mesh4): $(call residual, Ret640/tau/mesh3)
 	$(call runcase, $(call casedir, $@),$(call casedir, $<))
 
-clean: clean_cases
+plots: $(RESIDUALS)
+	@for case in Ret{395,640}/{bulk,tau}; do pushd $$case; ./scripts/plots; popd; done
+
+clean: clean_cases clean_plots
 clean_cases:
 	@for case in $(CASES); do pushd $$case; ./Allclean; popd; done
+clean_plots:
+	@for case in Ret{395,640}/{bulk,tau}; do pushd $$case; $(RM) *.png; popd; done
 
-.PHONY: all cases clean clean_cases
+.PHONY: all cases clean clean_cases plots clean_plots
