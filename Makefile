@@ -25,7 +25,7 @@ CASE395BULK:=$(addprefix Ret395/,$(BULK))
 CASE640TAU:=$(addprefix Ret640/,$(TAU) tau/mesh5)
 CASE640BULK:=$(addprefix Ret640/,$(BULK) bulk/mesh5)
 CASES:=$(CASE395TAU) $(CASE395BULK) $(CASE640TAU) $(CASE640BULK)
-ADD_CASES:=$(addprefix Ret640/bulk/epsWall/mesh,1 2 3 4 5)
+ADD_CASES:=$(addprefix Ret640/bulk/epsWall/mesh,1 2 3 4 5) $(addprefix Ret640/bulk/streamwise/mesh1-,2 3 4) $(addprefix Ret640/bulk/streamwise/mesh4-,2 3 4)
 
 RESIDUALS:=$(addsuffix /postProcessing/residuals/0/residuals.png,$(CASES))
 ADD_RESIDUALS:=$(addsuffix /postProcessing/residuals/0/residuals.png,$(ADD_CASES))
@@ -102,7 +102,7 @@ clean_plots:
 .PHONY: all cases clean clean_cases plots clean_plots
 
 
-$(call residual, Ret640/bulk/epsWall/mesh1)
+$(call residual, Ret640/bulk/epsWall/mesh1):
 	$(call runcase, $(call casedir, $@),)
 
 $(call residual, Ret640/bulk/epsWall/mesh2): $(call residual, Ret640/bulk/epsWall/mesh1)
@@ -115,6 +115,24 @@ $(call residual, Ret640/bulk/epsWall/mesh4): $(call residual, Ret640/bulk/epsWal
 	$(call runcase, $(call casedir, $@),$(call casedir, $<))
 
 $(call residual, Ret640/bulk/epsWall/mesh5): $(call residual, Ret640/bulk/epsWall/mesh4)
+	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+
+$(call residual, Ret640/bulk/streamwise/mesh1-2): $(call residual, Ret640/bulk/mesh1)
+	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+
+$(call residual, Ret640/bulk/streamwise/mesh1-3): $(call residual, Ret640/bulk/streamwise/mesh1-2)
+	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+
+$(call residual, Ret640/bulk/streamwise/mesh1-4): $(call residual, Ret640/bulk/streamwise/mesh1-3)
+	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+
+$(call residual, Ret640/bulk/streamwise/mesh4-2): $(call residual, Ret640/bulk/mesh4)
+	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+
+$(call residual, Ret640/bulk/streamwise/mesh4-3): $(call residual, Ret640/bulk/streamwise/mesh4-2)
+	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+
+$(call residual, Ret640/bulk/streamwise/mesh4-4): $(call residual, Ret640/bulk/streamwise/mesh4-3)
 	$(call runcase, $(call casedir, $@),$(call casedir, $<))
 
 clean: clean_additional
