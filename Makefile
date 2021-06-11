@@ -25,11 +25,14 @@ CASE395BULK:=$(addprefix Ret395/,$(BULK))
 CASE640TAU:=$(addprefix Ret640/,$(TAU) tau/mesh5)
 CASE640BULK:=$(addprefix Ret640/,$(BULK) bulk/mesh5)
 CASES:=$(CASE395TAU) $(CASE395BULK) $(CASE640TAU) $(CASE640BULK)
+ADD_CASES:=$(addprefix Ret640/bulk/epsWall/mesh,1 2 3 4 5)
 
 RESIDUALS:=$(addsuffix /postProcessing/residuals/0/residuals.png,$(CASES))
+ADD_RESIDUALS:=$(addsuffix /postProcessing/residuals/0/residuals.png,$(ADD_CASES))
 
 all: cases
 cases: $(RESIDUALS)
+additional: $(ADD_RESIDUALS)
 
 $(call residual, Ret395/bulk/mesh1):
 	$(call runcase, $(call casedir, $@),)
@@ -97,3 +100,25 @@ clean_plots:
 	@for case in Ret{395,640}; do pushd $$case; $(RM) *.png; popd; done
 
 .PHONY: all cases clean clean_cases plots clean_plots
+
+
+$(call residual, Ret640/bulk/epsWall/mesh1)
+	$(call runcase, $(call casedir, $@),)
+
+$(call residual, Ret640/bulk/epsWall/mesh2): $(call residual, Ret640/bulk/epsWall/mesh1)
+	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+
+$(call residual, Ret640/bulk/epsWall/mesh3): $(call residual, Ret640/bulk/epsWall/mesh2)
+	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+
+$(call residual, Ret640/bulk/epsWall/mesh4): $(call residual, Ret640/bulk/epsWall/mesh3)
+	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+
+$(call residual, Ret640/bulk/epsWall/mesh5): $(call residual, Ret640/bulk/epsWall/mesh4)
+	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+
+clean: clean_additional
+clean_additional:
+	@for case in $(ADD_CASES); do pushd $$case; ./Allclean; popd; done
+
+.PHONY: additional clean_additional
