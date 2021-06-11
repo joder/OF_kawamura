@@ -14,6 +14,8 @@ define casedir
 $(subst /postProcessing/residuals/0/residuals.png,,$1)
 endef
 
+# This makefile is written without actual dependencies. Mainly because I am lazy.
+
 MESH:=$(addprefix mesh,1 2 3 4)
 TAU:=$(addprefix tau/,$(MESH))
 BULK:=$(addprefix bulk/,$(MESH))
@@ -85,11 +87,13 @@ $(call residual, Ret640/tau/mesh5): $(call residual, Ret640/tau/mesh4)
 
 plots: $(RESIDUALS)
 	@for case in Ret{395,640}/{bulk,tau}; do pushd $$case; ./scripts/plots; popd; done
+	@for case in Ret{395,640}; do pushd $$case; ./scripts/plots; popd; done
 
 clean: clean_cases clean_plots
 clean_cases:
 	@for case in $(CASES); do pushd $$case; ./Allclean; popd; done
 clean_plots:
 	@for case in Ret{395,640}/{bulk,tau}; do pushd $$case; $(RM) *.png; popd; done
+	@for case in Ret{395,640}; do pushd $$case; $(RM) *.png; popd; done
 
 .PHONY: all cases clean clean_cases plots clean_plots
