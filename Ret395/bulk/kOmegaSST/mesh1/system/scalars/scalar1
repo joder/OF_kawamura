@@ -1,0 +1,95 @@
+scalar1
+{
+    /* Coefficients calculated with octave:
+       Tunit  =1
+       h      =0.03025
+       Ret    =395
+       Pr     =[0.025 0.71  1     2     5     7     10   ]
+       Reb    =[13967 13967 14124 14124 14124 14124 14124]
+       Prt    =[0.85  0.85  0.85  0.85  0.85  0.85  0.85 ]
+       alphaD =1./Pr
+       nu     =1.74e-7
+       B      =-Tunit/h*Ret.*Pr
+       SsF    =-Tunit*nu*Ret/h^2
+       alphaDt=1./Prt
+
+       Source is then
+       Ss     =SsF*Ux/Uavg*V;
+
+       Results:
+                0.025                   0.71                    1                       2                       5                       7                       10
+       alphaD =[ 4.000000000000000e+01   1.408450704225352e+00   1.000000000000000e+00   5.000000000000000e-01   2.000000000000000e-01   1.428571428571428e-01   1.000000000000000e-01]
+       B      =[-3.264462809917356e+02  -9.271074380165290e+03  -1.305785123966942e+04  -2.611570247933884e+04  -6.528925619834711e+04  -9.140495867768595e+04  -1.305785123966942e+05]
+       SsF    =-7.510962365958609e-02
+       alphaDt=[ 1.176470588235294e+00   1.176470588235294e+00   1.176470588235294e+00   1.176470588235294e+00   1.176470588235294e+00   1.176470588235294e+00   1.176470588235294e+00]
+    */
+    type                scalarTransport;
+    functionObjectLibs  ("libsolverFunctionObjects.so");
+    enabled             true;
+    writeControl        outputTime;
+
+    field           T1;
+    nCorr           1;
+    // Diffusion coefficient D = alphaD * nu + alphaDt * nut
+    // alphaD = alpha = 1/Pr
+    alphaD          1.000000000000000e+00;
+    // alphaDt = alpha_t = 1/Prt
+    alphaDt         1.176470588235294e+00;
+    nut             nut;
+    schemesField    h;
+    log             yes;
+    fvOptions
+    {
+        scalarSource
+        {
+            type            scalarCodedSource;
+            active          yes;
+            name            scalar1Source;
+            selectionMode   all;
+
+            scalarCodedSourceCoeffs
+            {
+                selectionMode   all;
+                fields          (T1);
+
+                codeInclude
+                #{
+
+                #};
+
+                codeCorrect
+                #{
+                    //Pout<< "**codeCorrect**" << endl;
+                #};
+
+                codeAddSup
+                #{
+                    const scalarField& V = mesh_.V();
+                    const volVectorField& U = mesh().lookupObject<volVectorField>("U");
+                    const scalar Uavg = U.weightedAverage(mesh_.V()).value().component(vector::X);
+
+                    scalarField& scalar = eqn.source();
+                    scalar += ( -7.510962365958609e-02 / Uavg ) * ( U.component(vector::X) * V );
+                #};
+
+                codeSetValue
+                #{
+                    //Pout<< "**codeSetValue**" << endl;
+                #};
+
+                code
+                #{
+                    $codeInclude
+                    $codeCorrect
+                    $codeAddSup
+                    $codeSetValue
+                #};
+
+                sourceTimeCoeffs
+                {
+                    $scalarCodedSourceCoeffs;
+                }
+            }
+        }
+    }
+}

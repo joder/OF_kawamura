@@ -1,0 +1,26 @@
+if(ARGC!=2) {
+	print sprintf("Not enough arguments!\nUsage: gnuplot -c \"%s\" line_NAME.xy N\nExiting gnuplot", ARG0)
+	exit gnuplot
+}
+fn=ARG1
+col=ARG2+0
+
+load 'common.gpi'
+
+epsp(u,v,w)=(u+v+w)
+k(u,v,w)=0.5*(u+v+w)
+
+set ylabel '{/Symbol o}^+'
+
+set output 'comp_omega.png'
+plot\
+  Knut u 1:(-epsp($5,$6,$7)/k($2,$3,$4)) t 'Kawamura' ls 1 \
+, fn u (yp($1)):(column(col)/(nu*utau**2/h**2)/Retau**2) t 'Current' ls 2
+
+set output 'comp_omega_semilog.png'
+set logscale x
+replot
+
+set output 'comp_omega_log.png'
+set logscale xy
+replot
