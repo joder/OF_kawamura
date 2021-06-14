@@ -1,0 +1,8 @@
+#!/bin/bash
+
+base="${1:-$PWD}"
+
+export GNUPLOT_LIB="$base/scripts:$base/../../Kawamura_data"
+for i in "$base/scripts"/{U,k,epsilon,nut,T{0025,071}}.gpi; do
+	gnuplot -c "$i"
+done

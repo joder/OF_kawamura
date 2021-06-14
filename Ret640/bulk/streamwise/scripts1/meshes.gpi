@@ -1,0 +1,23 @@
+rU='line_U.xy'
+rp='line_p_T_k_epsilon_nut_T0025_T071.xy'
+
+dir(i)=word("../mesh1 mesh1-2 mesh1-3 mesh1-4",i)
+titl(i)=sprintf("N = %3s",word("50 100 200 300",i))
+times(i)=system(sprintf("foamListTimes -case '%s' -latestTime",dir(i)))
+srcU(i)=sprintf('%s/postProcessing/singleGraph/%s/%s',dir(i),times(i),rU)
+srcp(i)=sprintf('%s/postProcessing/singleGraph/%s/%s',dir(i),times(i),rp)
+linstyl(i)=i+1
+
+wMesh="l"
+wDNS="p"
+lsDNS=1
+lsT1=7
+N=4
+
+set linestyle 1 lc rgb "black"
+set linestyle 2 lc rgb "red"
+set linestyle 3 lc rgb "blue"
+set linestyle 4 lc rgb "magenta"
+set linestyle 5 lc rgb "green"
+set linestyle 6 lc rgb "cyan"
+set linestyle 7 lc rgb "yellow"
