@@ -65,7 +65,7 @@ functions
             p_rgh
             h
             k
-            epsilon
+            omega
             T0025
             T071
         );
@@ -79,6 +79,6 @@ functions
         writeFields no;
         regionType  all;
         operation   volAverage;
-        fields      (U p_rgh h k epsilon T T0025 T071);
+        fields      (U p_rgh h k omega T T0025 T071);
     }
 };
