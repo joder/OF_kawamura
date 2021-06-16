@@ -1,5 +1,6 @@
 load 'common.gpi'
 
+col=6
 nut(x)=x/nu
 
 set ylabel '{/Symbol n}_t^+'
