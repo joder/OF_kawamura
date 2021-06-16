@@ -7,20 +7,14 @@ col=ARG2+0
 
 load 'common.gpi'
 
-k(u,v,w)=0.5*(u+v+w)
-epsp(u,v,w)=(u+v+w)
+nut(x)=x/nu
 
-Cmu=0.09
-fMu(k,ep)=exp(-3.4/((1+k**2/(50*ep))**2))
-nutLSKE(k,ep)=Cmu*fMu(k,ep)*k**2/ep
-kc(uu,vv,ww,eu,ev,ew)=nutLSKE(k(uu,vv,ww)*utau**2,-epsp(eu,ev,ew)*nu*utau**2/h**2*Retau**2)
-
-set ylabel '{/Symbol n}_t'
+set ylabel '{/Symbol n}_t^+'
 
 set output 'comp_nut.png'
 plot\
-  Knut u 1:(kc($2,$3,$4,$5,$6,$7)) t 'Kawamura Re_{/Symbol t}=395' \
-, fn u (yp($1)):(column(col)) t 'Current' ls 2
+  Knut2 u 1:2 t 'Kawamura Re_{/Symbol t}=395' \
+, fn u (yp($1)):(nut(column(col))) t 'Current' ls 2
 
 set output 'comp_nut_semilog.png'
 set logscale x
