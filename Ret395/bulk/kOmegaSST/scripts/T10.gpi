@@ -12,8 +12,14 @@ plot\
 
 set output 'comp_T10_semilog.png'
 set logscale x
-replot
+plot\
+  x notitle ls lsT1 \
+, KT10 u 2:($3/Pr) w @wDNS t 'Kawamura' ls lsDNS \
+, for [i=1:N] srcp(i) u (yplog($1)):(subst(column(col))/Pr) w @wMesh t titl(i) ls linstyl(i)
 
 set output 'comp_T10_log.png'
 set logscale xy
-replot
+plot\
+  x notitle ls lsT1 \
+, KT10 u 2:($3/Pr) w @wDNS t 'Kawamura' ls lsDNS \
+, for [i=1:N] srcp(i) u (yplog($1)):(subst(column(col))/Pr) w @wMesh t titl(i) ls linstyl(i)

@@ -13,8 +13,12 @@ plot\
 
 set output 'comp_omega_semilog.png'
 set logscale x
-replot
+plot\
+  Knut u 1:(-epsp($5,$6,$7)/k($1,$2,$3)) w @wDNS t 'Kawamura' ls lsDNS \
+, for [i=1:N] srcp(i) u (yplog($1)):(column(col)/(nu*h**2)/Retau**2) w @wMesh t titl(i) ls linstyl(i)
 
 set output 'comp_omega_log.png'
 set logscale xy
-replot
+plot\
+  Knut u 1:(-epsp($5,$6,$7)/k($1,$2,$3)) w @wDNS t 'Kawamura' ls lsDNS \
+, for [i=1:N] srcp(i) u (yplog($1)):(column(col)/(nu*h**2)/Retau**2) w @wMesh t titl(i) ls linstyl(i)

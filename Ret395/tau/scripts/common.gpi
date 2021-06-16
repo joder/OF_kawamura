@@ -4,6 +4,7 @@ load 'meshes.gpi'
 utau=nu/h*Retau
 
 yp(y)=y/h*Retau
+yplog(y)=(y==0?NaN:yp(y))
 
 subst(x)=(($0==0?t0=x:x),x-t0)
 

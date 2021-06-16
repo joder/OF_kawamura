@@ -9,8 +9,12 @@ plot\
 
 set output 'comp_U_semilog.png'
 set logscale x
-replot
+plot\
+  KU u 2:3 w @wDNS t 'Kawamura' ls lsDNS \
+, for [i=1:N] srcU(i) u (yplog($1)):($2/utau) w @wMesh t titl(i) ls linstyl(i)
 
 set output 'comp_U_log.png'
 set logscale xy
-replot
+plot\
+  KU u 2:3 w @wDNS t 'Kawamura' ls lsDNS \
+, for [i=1:N] srcU(i) u (yplog($1)):($2/utau) w @wMesh t titl(i) ls linstyl(i)

@@ -18,8 +18,14 @@ plot\
 
 set output 'comp_T7_semilog.png'
 set logscale x
-replot
+plot\
+  x notitle ls 5 \
+, KT7 u 2:($3/Pr) t 'Kawamura' ls 1 \
+, fn u (yplog($1)):(subst(column(col))/Pr) t 'Current' ls 2
 
 set output 'comp_T7_log.png'
 set logscale xy
-replot
+plot\
+  x notitle ls 5 \
+, KT7 u 2:($3/Pr) t 'Kawamura' ls 1 \
+, fn u (yplog($1)):(subst(column(col))/Pr) t 'Current' ls 2
