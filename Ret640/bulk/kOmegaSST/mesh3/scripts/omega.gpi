@@ -9,22 +9,23 @@ load 'common.gpi'
 
 epsp(u,v,w)=(u+v+w)
 k(u,v,w)=0.5*(u+v+w)
+omega(x)=x*h**2/nu/Retau**2
 
-set ylabel '{/Symbol o}^+'
+set ylabel '{/Symbol w}^+'
 
 set output 'comp_omega.png'
 plot\
   Knut u 1:(-epsp($5,$6,$7)/k($2,$3,$4)) t 'Kawamura' ls 1 \
-, fn u (yp($1)):(column(col)/(nu*utau**2/h**2)/Retau**2) t 'Current' ls 2
+, fn u (yp($1)):(omega(column(col))) t 'Current' ls 2
 
 set output 'comp_omega_semilog.png'
 set logscale x
 plot\
   Knut u 1:(-epsp($5,$6,$7)/k($2,$3,$4)) t 'Kawamura' ls 1 \
-, fn u (yplog($1)):(column(col)/(nu*utau**2/h**2)/Retau**2) t 'Current' ls 2
+, fn u (yplog($1)):(omega(column(col))) t 'Current' ls 2
 
 set output 'comp_omega_log.png'
 set logscale xy
 plot\
   Knut u 1:(-epsp($5,$6,$7)/k($2,$3,$4)) t 'Kawamura' ls 1 \
-, fn u (yplog($1)):(column(col)/(nu*utau**2/h**2)/Retau**2) t 'Current' ls 2
+, fn u (yplog($1)):(omega(column(col))) t 'Current' ls 2
