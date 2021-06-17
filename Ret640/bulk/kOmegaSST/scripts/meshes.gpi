@@ -15,9 +15,9 @@ lsT1=7
 N=5
 
 set linestyle 1 lc rgb "black"
-set linestyle 2 lc rgb "red"
-set linestyle 3 lc rgb "blue"
-set linestyle 4 lc rgb "magenta"
-set linestyle 5 lc rgb "green"
-set linestyle 6 lc rgb "cyan"
-set linestyle 7 lc rgb "yellow"
+set linestyle 2 lw 1.5 lc rgb "red"
+set linestyle 3 lw 1.5 lc rgb "blue"
+set linestyle 4 lw 1.5 lc rgb "magenta"
+set linestyle 5 lw 1.5 lc rgb "green"
+set linestyle 6 lw 1.5 lc rgb "cyan"
+set linestyle 7 lw 1.5 lc rgb "yellow"
