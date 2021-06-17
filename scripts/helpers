@@ -1,0 +1,25 @@
+retau() {
+	printf "%25s %15s%15s%15s\n" NAME y y+ Re_tau
+	for m in "$@"; do
+		y="$(awk '/^\(/{a++}a==3{print $2;exit}' "$m/constant/polyMesh/points")"
+		restarts=( "$m"/postProcessing/yPlus/[0-9]*/ )
+		yp="$(awk '{yp=$5}END{print yp}' "${restarts[-1]}/yPlus.dat")"
+		printf '%25s %15.7e%15.7e\n' "$m" "$y" "$yp"
+	done | awk '{printf "%s%15.7e\n",$0,$3/(0.5*$2/0.03025)}'
+}
+
+reb() {
+	printf "%25s %15s%15s%15s%15s%15s\n" NAME mu rho h u_b Re_b
+	for m in "$@"; do
+		restarts=( "$m"/postProcessing/volFieldValue1/[0-9]*/ )
+		mu="$(foamDictionary -entry mixture.transport.mu "$m/constant/thermophysicalProperties" | awk '{print gensub(/;/,"",1,$2)}')"
+		rho="$(foamDictionary -entry mixture.equationOfState.rho "$m/constant/thermophysicalProperties" | awk '{print gensub(/;/,"",1,$2)}')"
+		h="$(foamDictionary -entry convertToMeters "$m/system/blockMeshDict" | awk '{print gensub(/;/,"",1,$2)}')"
+		ub="$(tail -1 "${restarts[-1]}/volFieldValue.dat" | awk '{printf "%15.7e\n", gensub(/\(/,"",1,$2)}')"
+		printf '%25s %15.7e%15.7e%15.7e%15.7e%15.7e\n' "$m" "$mu" "$rho" "$h" "$ub" "$(awk "BEGIN{printf \"%15.7e\", 2*$ub*$rho*$h/$mu;exit}")"
+	done
+}
+
+retaureb () {
+join <(retau "$@" | awk '{printf "%25s %15s\n",$1,$4}') <(reb "$@" | awk '{printf "%25s %15s\n",$1,$6}') | awk '{printf "%25s %15s %15s\n",$1,$2,$3}'
+}

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+. ./scripts/helpers
+
+printf '# Ret = 395, Reb = 12967\n'
+retaureb Ret395/{bulk,tau}/mesh{1,2,3,4} > retaureb395.txt
+awk 'NR==1{printf "%25s %8s%8s%7s%7s\n",$1,$2,"diff",$3,"diff"}NR>1{printf "%25s %8.2f%8.2f%7.0f%7.2f\n",$1,$2,100*($2/395-1),$3,100*($3/12967-1)}' retaureb395.txt
+
+printf '# Ret = 640, Reb = 24428\n'
+retaureb Ret640/{bulk,tau}/mesh{1,2,3,4,5} > retaureb640.txt
+awk 'NR==1{printf "%25s %8s%8s%7s%7s\n",$1,$2,"diff",$3,"diff"}NR>1{printf "%25s %8.2f%8.2f%7.0f%7.2f\n",$1,$2,100*($2/640-1),$3,100*($3/24428-1)}' retaureb640.txt
