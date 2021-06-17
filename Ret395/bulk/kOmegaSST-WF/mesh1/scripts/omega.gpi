@@ -28,4 +28,4 @@ set output 'comp_omega_log.png'
 set logscale xy
 plot\
   Knut u 1:(-epsp($5,$6,$7)/k($2,$3,$4)) t 'Kawamura' ls 1 \
-, fn u (yplog($1)):(omega(column(col))) t 'Current' ls 2
+, fn u (yp($1)):(omega(column(col))) t 'Current' ls 2

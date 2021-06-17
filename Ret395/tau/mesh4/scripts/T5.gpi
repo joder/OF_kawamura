@@ -28,4 +28,4 @@ set logscale xy
 plot\
   sample [*:10] x notitle ls 5 \
 , KT5 u 2:($3/Pr) t 'Kawamura' ls 1 \
-, fn u (yplog($1)):(subst(column(col))/Pr) t 'Current' ls 2
+, fn u (yp($1)):(subst(column(col))/Pr) t 'Current' ls 2

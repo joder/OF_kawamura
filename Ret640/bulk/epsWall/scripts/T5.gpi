@@ -22,4 +22,4 @@ set logscale xy
 plot\
   x notitle ls lsT1 \
 , KT5 u 2:($3/Pr) w @wDNS t 'Kawamura' ls lsDNS \
-, for [i=1:N] srcp(i) u (yplog($1)):(subst(column(col))/Pr) w @wMesh t titl(i) ls linstyl(i)
+, for [i=1:N] srcp(i) u (yp($1)):(subst(column(col))/Pr) w @wMesh t titl(i) ls linstyl(i)
