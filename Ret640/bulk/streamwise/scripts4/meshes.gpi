@@ -12,7 +12,7 @@ wMesh="l"
 wDNS="p"
 lsDNS=1
 lsT1=7
-N=4
+N=2
 
 set linestyle 1 lc rgb "black"
 set linestyle 2 lw 1.5 lc rgb "red"
