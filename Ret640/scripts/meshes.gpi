@@ -1,7 +1,7 @@
 rU='line_U.xy'
 rp='line_p_T_k_epsilon_nut_T0025_T071.xy'
 
-dir(i)=word("bulk/mesh4 tau/mesh4",i)
+dir(i)=word("bulk/mesh5 tau/mesh5",i)
 titl(i)=word("bulk tau",i)
 times(i)=system(sprintf("foamListTimes -case '%s' -latestTime",dir(i)))
 srcU(i)=sprintf('%s/postProcessing/singleGraph/%s/%s',dir(i),times(i),rU)
