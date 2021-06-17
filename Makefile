@@ -153,9 +153,6 @@ $(call residual, Ret395/bulk/kOmegaSST/mesh3): $(call residual, Ret395/bulk/kOme
 $(call residual, Ret395/bulk/kOmegaSST/mesh4): $(call residual, Ret395/bulk/kOmegaSST/mesh3)
 	$(call runcase, $(call casedir, $@),$(call casedir, $<))
 
-$(call residual, Ret395/bulk/kOmegaSST/mesh5): $(call residual, Ret395/bulk/kOmegaSST/mesh4)
-	$(call runcase, $(call casedir, $@),$(call casedir, $<))
-
 $(call residual, Ret395/bulk/kOmegaSST-WF/mesh1):
 	$(call runcase, $(call casedir, $@),)
 
@@ -166,9 +163,6 @@ $(call residual, Ret395/bulk/kOmegaSST-WF/mesh3): $(call residual, Ret395/bulk/k
 	$(call runcase, $(call casedir, $@),$(call casedir, $<))
 
 $(call residual, Ret395/bulk/kOmegaSST-WF/mesh4): $(call residual, Ret395/bulk/kOmegaSST-WF/mesh3)
-	$(call runcase, $(call casedir, $@),$(call casedir, $<))
-
-$(call residual, Ret395/bulk/kOmegaSST-WF/mesh5): $(call residual, Ret395/bulk/kOmegaSST-WF/mesh4)
 	$(call runcase, $(call casedir, $@),$(call casedir, $<))
 
 $(call residual, Ret640/bulk/kOmegaSST/mesh1):
