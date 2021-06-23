@@ -32,12 +32,12 @@ boundaryField
     }
     bottom
     {
-        type        fixedValue;
+        type        omegaWallFunction;
         value       uniform     $omegaValue;
     }
     top
     {
-        type        fixedValue;
+        type        omegaWallFunction;
         value       uniform     $omegaValue;
     }
     frontAndBack

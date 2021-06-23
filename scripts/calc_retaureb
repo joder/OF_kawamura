@@ -3,9 +3,9 @@
 . ./scripts/helpers
 
 printf '# Ret = 395, Reb = 13967\n'
-retaureb Ret395/{bulk,tau}/mesh{1,2,3,4} Ret395/bulk/kOmegaSST{,-WF}/mesh{1,2,3,4} > retaureb395.txt
+retaureb Ret395/{bulk,tau}/mesh{1,2,3,4} Ret395/bulk/kOmegaSST/mesh{1,2,3,4} > retaureb395.txt
 awk 'NR==1{printf "%25s %8s%8s%7s%7s\n",$1,$2,"diff",$3,"diff"}NR>1{printf "%25s %8.2f%8.2f%7.0f%7.2f\n",$1,$2,100*($2/395-1),$3,100*($3/13967-1)}' retaureb395.txt
 
 printf '# Ret = 640, Reb = 24428\n'
-retaureb Ret640/{bulk,tau}/mesh{1,2,3,4,5} Ret640/bulk/{epsWall/mesh{1,2,3,4},kOmegaSST{,-WF}/mesh{1,2,3,4},streamwise/{mesh1-{2,3,4},mesh4-2}} > retaureb640.txt
+retaureb Ret640/{bulk,tau}/mesh{1,2,3,4,5} Ret640/bulk/{epsWall/mesh{1,2,3,4},kOmegaSST/mesh{1,2,3,4},streamwise/{mesh1-{2,3,4},mesh4-2}} > retaureb640.txt
 awk 'NR==1{printf "%25s %8s%8s%7s%7s\n",$1,$2,"diff",$3,"diff"}NR>1{printf "%25s %8.2f%8.2f%7.0f%7.2f\n",$1,$2,100*($2/640-1),$3,100*($3/24428-1)}' retaureb640.txt
