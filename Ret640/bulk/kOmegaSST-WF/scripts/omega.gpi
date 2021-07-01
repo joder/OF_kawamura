@@ -22,7 +22,11 @@ plot\
 
 set output 'comp_omega_log.png'
 set logscale xy
+set ytics 1e-20,10,1e20
+set mytics 10
+set format y '10^{%T}'
+set yrange [1e-5:1e3]
 plot\
   Knut u 1:(-epsp($5,$6,$7)/k($1,$2,$3)) w @wDNS t 'Kawamura' ls lsDNS \
-, for [i=1:N-1] srcp(i) u (yp($1)):(omega(column(col))) w @wMesh t titl(i) ls linstyl(i) \
-, for [i=N:N] srcp(i) u (yp($1)):(omega(column(col)/$4)) w @wMesh t titl(i) ls linstyl(i)
+, for [i=1:N-1] srcp(i) u (yplog($1)):(omega(column(col))) w @wMesh t titl(i) ls linstyl(i) \
+, for [i=N:N] srcp(i) u (yplog($1)):(omega(column(col)/$4)) w @wMesh t titl(i) ls linstyl(i)
