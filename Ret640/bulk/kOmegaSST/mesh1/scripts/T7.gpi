@@ -8,7 +8,7 @@ col=ARG2+0
 load 'common.gpi'
 Pr=7
 
-set ylabel 'T^{+}'
+set ylabel 'T^{+} / Pr'
 
 set output 'comp_T7.png'
 plot\
