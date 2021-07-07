@@ -37,7 +37,7 @@ norm() {
 	
 	case "$var" in
 		U)
-			printf '%10s%30s %s\n' "$var" "$case" "$(\
+			out="$(\
 			python3 ./scripts/diff.py --ref-col-x 2 --ref-col-y 3 \
 			"$kawamura/${dnssrc[$var]}" \
 			<(awk -v h="$h" -v ret="$ret" -v nu="$nu" -v f="$field"\
@@ -45,7 +45,7 @@ norm() {
 				"$file") | tail -n -1)"
 			;;
 		k)
-			printf '%10s%30s %s\n' "$var" "$case" "$(\
+			out="$(\
 			python3 ./scripts/diff.py \
 			<(awk '{printf "%24.16e%24.16e\n", $1, 0.5*($2+$3+$4)}' "$kawamura/${dnssrc[$var]}") \
 			<(awk -v h="$h" -v ret="$ret" -v nu="$nu" -v f="$field"\
@@ -53,7 +53,7 @@ norm() {
 				"$file") | tail -n -1)"
 			;;
 		epsilon)
-			printf '%10s%30s %s\n' "$var" "$case" "$(\
+			out="$(\
 			python3 ./scripts/diff.py \
 			<(awk '{printf "%24.16e%24.16e\n", $1, ($2+$3+$4)}' "$kawamura/${dnssrc[$var]}") \
 			<(awk -v h="$h" -v ret="$ret" -v nu="$nu" -v f="$field"\
@@ -61,7 +61,7 @@ norm() {
 				"$file") | tail -n -1)"
 			;;
 		nut)
-			printf '%10s%30s %s\n' "$var" "$case" "$(\
+			out="$(\
 			python3 ./scripts/diff.py \
 			"$kawamura/${dnssrc[$var]}" \
 			<(awk -v h="$h" -v ret="$ret" -v nu="$nu" -v f="$field"\
@@ -69,7 +69,7 @@ norm() {
 				"$file") | tail -n -1)"
 			;;
 		T[0-9]*)
-			printf '%10s%30s %s\n' "$var" "$case" "$(\
+			out="$(\
 			python3 ./scripts/diff.py \
 			"$kawamura/${dnssrc[$var]}" \
 			<(awk -v h="$h" -v ret="$ret" -v nu="$nu" -v f="$field" -v pr="${pr[$var]}"\
@@ -77,7 +77,10 @@ norm() {
 				"$file") | tail -n -1)"
 			;;
 		*)
+			return
+			;;
 	esac
+	printf '%10s%30s %s\n' "$var" "$case" "$out"
 }
 
 printf '%10s%30s %15s%15s%15s%15s%15s%15s\n' Variable Case L1 L1_rel L2 L2_rel Linf Linf_rel
