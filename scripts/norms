@@ -47,7 +47,7 @@ norm() {
 		k)
 			out="$(\
 			python3 ./scripts/diff.py \
-			<(awk '{printf "%24.16e%24.16e\n", $1, 0.5*($2+$3+$4)}' "$kawamura/${dnssrc[$var]}") \
+			<(awk '!/^ j/{printf "%24.16e%24.16e\n", $1, 0.5*($2+$3+$4)}' "$kawamura/${dnssrc[$var]}") \
 			<(awk -v h="$h" -v ret="$ret" -v nu="$nu" -v f="$field"\
 				'$1<=h{printf "%24.16e%24.16e\n", $1/h*ret, $f*(h/nu/ret)**2}' \
 				"$file") | tail -n -1)"
@@ -55,7 +55,7 @@ norm() {
 		epsilon)
 			out="$(\
 			python3 ./scripts/diff.py \
-			<(awk '{printf "%24.16e%24.16e\n", $1, ($2+$3+$4)}' "$kawamura/${dnssrc[$var]}") \
+			<(awk '!/^ j/{printf "%24.16e%24.16e\n", $1,-($2+$3+$4)}' "$kawamura/${dnssrc[$var]}") \
 			<(awk -v h="$h" -v ret="$ret" -v nu="$nu" -v f="$field"\
 				'$1<=h{printf "%24.16e%24.16e\n", $1/h*ret, $f*h**4/nu**3/ret**4}' \
 				"$file") | tail -n -1)"
@@ -71,9 +71,9 @@ norm() {
 		T[0-9]*)
 			out="$(\
 			python3 ./scripts/diff.py \
-			"$kawamura/${dnssrc[$var]}" \
+			<(awk -v pr="${pr[$var]}" '!/^ j/{printf "%24.16e%24.16e\n",$2,$3/pr}' "$kawamura/${dnssrc[$var]}") \
 			<(awk -v h="$h" -v ret="$ret" -v nu="$nu" -v f="$field" -v pr="${pr[$var]}"\
-				'$1<=h{printf "%24.16e%24.16e\n", $1/h*ret, $f/pr}' \
+			'$1==0{t0=$f;printf "%24.16e%24.16e\n", 0, 0;next}$1<=h{printf "%24.16e%24.16e\n", $1/h*ret, ($f-t0)/pr}' \
 				"$file") | tail -n -1)"
 			;;
 		*)
