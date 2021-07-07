@@ -2,8 +2,26 @@
 
 h=0.03025
 nu=1.74e-7
-ret=640
-kawamura="Ret640/Kawamura_data"
+
+usage() {
+	cat <<-EOF
+		$0 ret case1 [case2 [case3 ...]]
+
+		Calculate absolute and relative L1, L2 and Linf norms of discrepancies between DNS
+		and results found at the last time step of cases. ret is the friction Reynolds number
+		for all cases. It is needed to properly scale the results.
+	EOF
+}
+
+if (( $# < 2 )); then
+	usage
+	exit 1
+fi
+
+ret=$1
+shift
+
+kawamura="Ret$ret/Kawamura_data"
 declare -A dnssrc
 dnssrc=(\
 	[U]=TS_1.dat \
@@ -12,11 +30,21 @@ dnssrc=(\
 	[nut]=nut.dat \
 	[T0025]=uhf0025_TS_1.dat \
 	[T071]=uhf071_TS_1.dat \
+	[T1]=uhf1_TS_1.dat \
+	[T2]=uhf2_TS_1.dat \
+	[T5]=uhf5_TS_1.dat \
+	[T7]=uhf7_TS_1.dat \
+	[T10]=uhf10_TS_1.dat \
 )
 declare -A pr
 pr=(\
 	[T0025]=0.025 \
 	[T071]=0.71 \
+	[T1]=1 \
+	[T2]=2 \
+	[T5]=5 \
+	[T7]=7 \
+	[T10]=10 \
 )
 
 norm() {
