@@ -1,0 +1,88 @@
+#!/bin/bash
+
+h=0.03025
+nu=1.74e-7
+ret=640
+kawamura="Ret640/Kawamura_data"
+declare -A dnssrc
+dnssrc=(\
+	[U]=TS_1.dat \
+	[k]=TS.dat \
+	[epsilon]=eps.dat \
+	[nut]=nut.dat \
+	[T0025]=uhf0025_TS_1.dat \
+	[T071]=uhf071_TS_1.dat \
+)
+declare -A pr
+pr=(\
+	[T0025]=0.025 \
+	[T071]=0.71 \
+)
+
+norm() {
+	local var="$1"
+	local case="$2"
+	local file="$3"
+	local field="$4"
+	
+	case "$var" in
+		U)
+			out="$(\
+			python3 ./scripts/diff.py --ref-col-x 2 --ref-col-y 3 \
+			"$kawamura/${dnssrc[$var]}" \
+			<(awk -v h="$h" -v ret="$ret" -v nu="$nu" -v f="$field"\
+				'$1<=h{printf "%24.16e%24.16e\n", $1/h*ret, $f*h/nu/ret}' \
+				"$file") | tail -n -1)"
+			;;
+		k)
+			out="$(\
+			python3 ./scripts/diff.py \
+			<(awk '!/^ j/{printf "%24.16e%24.16e\n", $1, 0.5*($2+$3+$4)}' "$kawamura/${dnssrc[$var]}") \
+			<(awk -v h="$h" -v ret="$ret" -v nu="$nu" -v f="$field"\
+				'$1<=h{printf "%24.16e%24.16e\n", $1/h*ret, $f*(h/nu/ret)**2}' \
+				"$file") | tail -n -1)"
+			;;
+		epsilon)
+			out="$(\
+			python3 ./scripts/diff.py \
+			<(awk '!/^ j/{printf "%24.16e%24.16e\n", $1,-($2+$3+$4)}' "$kawamura/${dnssrc[$var]}") \
+			<(awk -v h="$h" -v ret="$ret" -v nu="$nu" -v f="$field"\
+				'$1<=h{printf "%24.16e%24.16e\n", $1/h*ret, $f*h**4/nu**3/ret**4}' \
+				"$file") | tail -n -1)"
+			;;
+		nut)
+			out="$(\
+			python3 ./scripts/diff.py \
+			"$kawamura/${dnssrc[$var]}" \
+			<(awk -v h="$h" -v ret="$ret" -v nu="$nu" -v f="$field"\
+				'$1<=h{printf "%24.16e%24.16e\n", $1/h*ret, $f/nu}' \
+				"$file") | tail -n -1)"
+			;;
+		T[0-9]*)
+			out="$(\
+			python3 ./scripts/diff.py \
+			<(awk -v pr="${pr[$var]}" '!/^ j/{printf "%24.16e%24.16e\n",$2,$3/pr}' "$kawamura/${dnssrc[$var]}") \
+			<(awk -v h="$h" -v ret="$ret" -v nu="$nu" -v f="$field" -v pr="${pr[$var]}"\
+			'$1==0{t0=$f;printf "%24.16e%24.16e\n", 0, 0;next}$1<=h{printf "%24.16e%24.16e\n", $1/h*ret, ($f-t0)/pr}' \
+				"$file") | tail -n -1)"
+			;;
+		*)
+			return
+			;;
+	esac
+	printf '%10s%30s %s\n' "$var" "$case" "$out"
+}
+
+printf '%10s%30s %15s%15s%15s%15s%15s%15s\n' Variable Case L1 L1_rel L2 L2_rel Linf Linf_rel
+for case; do
+	time="$(foamListTimes -case "$case" -latestTime)"
+	for file in "$case/postProcessing/singleGraph/$time"/line_*.xy; do
+		a="${file#*/line_}"
+		b="${a%.xy}"
+		let j=2
+		while read -r v; do
+			norm "$v" "$case" "$file" "$j"
+			let j=j+1
+		done <<<${b//_/$'\n'}
+	done
+done
