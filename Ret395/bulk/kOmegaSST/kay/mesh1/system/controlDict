@@ -48,6 +48,8 @@ runTimeModifiable true;
 //adjustTimeStep  yes;
 //maxCo           0.01;
 
+libs ("libVKIThermophysicalTransportModels.so");
+
 
 functions
 {
