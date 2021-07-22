@@ -13,7 +13,7 @@ if [[ -d "$base/postProcessing/residuals/0" ]]; then
 fi
 
 if [[ -d "$base/postProcessing/singleGraph" ]]; then
-	export GNUPLOT_LIB="$base/scripts:$base/../../../Kawamura_data"
+	export GNUPLOT_LIB="$base/scripts:$base/../../../../Kawamura_data"
 	for i in "$base"/postProcessing/singleGraph/*/; do
 		pushd "$i"
 		for f in line_*.xy; do
