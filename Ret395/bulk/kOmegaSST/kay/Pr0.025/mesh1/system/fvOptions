@@ -14,6 +14,20 @@ FoamFile
     object      fvOptions;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+/*
+   nu     =1.74e-7 # m^2/s
+   Tunit  =1 # K
+   h      =0.03025 # m
+   Ret    =395
+   Pr     =[0.025 0.71  1     2     5     7     10   ]
+   Reb    =[13967 13967 14124 14124 14124 14124 14124]
+   ub     = Reb * nu / ( 2 * h )
+   SsF    =-Tunit*nu*Ret/h^2
+
+   Results:
+   ub     = 4.016955371900826e-02
+   SsF    =-7.510962365958609e-02
+*/
 
 momentumSource
 {
@@ -25,14 +39,6 @@ momentumSource
         selectionMode   all;
  
         fields          (U);
-        /*
-            nu  = 1.74e-7
-            h   = 0.03025
-            Reb = 13967
-            ub  = Reb * nu / ( 2 * h )
-
-            ub  = 4.016955371900826e-02
-        */
         Ubar            (4.016955371900826e-02 0 0);
         relaxation      1.0;
     }
@@ -42,7 +48,7 @@ energySource
 {
     type            scalarCodedSource;
     active          yes;
-    name            sourceTime;
+    name            enthalpySource;
     selectionMode   all;
 
     scalarCodedSourceCoeffs
@@ -64,18 +70,10 @@ energySource
         #{
             const scalarField& V = mesh_.V();
             const volVectorField& U = mesh().lookupObject<volVectorField>("U");
+            const scalar Uavg = U.weightedAverage(mesh_.V()).value().component(vector::X);
 
             scalarField& hSource = eqn.source();
-            // Source term is
-            // - 2 * rho * c_p /(Re_b * Pr) * v_1 * T_gradient
-            // where Re_b = 2 h u_b / nu
-            // and T_gradient is the gradient from the boundary condition
-            // (together with the sign). Source in the above form and gradient
-            // have the opposite sign!)
-            // Re_b = 13967
-            // Pr = 0.025
-            // T_gradient = -3.264462809917355e+02
-            hSource += 1.869814740412318e+00*U.component(vector::X)*V;
+            hSource += ( 7.510962365958609e-02 / Uavg ) * ( U.component(vector::X) * V );
         #};
 
         codeSetValue

@@ -53,7 +53,6 @@ libs ("libVKIThermophysicalTransportModels.so");
 
 functions
 {
-    #include "scalar"
     residuals
     {
         type           residuals;
@@ -68,13 +67,6 @@ functions
             h
             k
             omega
-            T0025
-            T071
-            T1
-            T2
-            T5
-            T7
-            T10
         );
     }
     #includeFunc yPlus
@@ -86,6 +78,6 @@ functions
         writeFields no;
         regionType  all;
         operation   volAverage;
-        fields      (U p_rgh h k omega T T0025 T071 T1 T2 T5 T7 T10);
+        fields      (U p_rgh h k omega T);
     }
 };
