@@ -16,12 +16,12 @@ endef
 
 define caserule1
 $(call residual, $(1)):
-	$(call runcase, $(call casedir, $$@),)
+	$$(call runcase, $$(call casedir, $$@),)
 endef
 
 define caserule2
 $(call residual, $(1)): $(call residual, $(2))
-	$(call runcase, $(call casedir, $$@), $(call casedir, $$<))
+	$$(call runcase, $$(call casedir, $$@), $$(call casedir, $$<))
 endef
 
 # This makefile is written without actual dependencies. Mainly because I am lazy.
