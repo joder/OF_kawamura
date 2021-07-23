@@ -14,6 +14,16 @@ define casedir
 $(subst /postProcessing/residuals/0/residuals.png,,$1)
 endef
 
+define caserule1
+$(call residual, $(1)):
+	$(call runcase, $(call casedir, $$@),)
+endef
+
+define caserule2
+$(call residual, $(1)): $(call residual, $(2))
+	$(call runcase, $(call casedir, $$@), $(call casedir, $$<))
+endef
+
 # This makefile is written without actual dependencies. Mainly because I am lazy.
 
 MESH:=$(addprefix mesh,1 2 3 4)
@@ -25,6 +35,7 @@ CASE395BULK:=$(addprefix Ret395/,$(BULK))
 CASE640TAU:=$(addprefix Ret640/,$(TAU) tau/LSkEps/mesh5)
 CASE640BULK:=$(addprefix Ret640/,$(BULK) bulk/LSkEps/mesh5)
 CASES:=$(CASE395TAU) $(CASE395BULK) $(CASE640TAU) $(CASE640BULK)
+KAY:=$(foreach i,1, $(addsuffix /mesh$(i),$(addprefix Ret395/bulk/kOmegaSST/kay/Pr,0.025 0.71 1 2 5 7 10)))
 ADD_CASES:=$(addprefix Ret640/bulk/epsWall/mesh,1 2 3 4 5)
 ADD_CASES+=$(addprefix Ret640/bulk/streamwise/mesh1-,2 3 4)
 ADD_CASES+=$(addprefix Ret640/bulk/streamwise/mesh4-,2 3 4)
@@ -37,6 +48,24 @@ ADD_RESIDUALS:=$(addsuffix /postProcessing/residuals/0/residuals.png,$(ADD_CASES
 all: cases
 cases: $(RESIDUALS)
 additional: $(ADD_RESIDUALS)
+
+kay: $(addsuffix /postProcessing/residuals/0/residuals.png,$(KAY))
+
+$(foreach c,\
+	$(addsuffix /mesh1,$(addprefix Ret395/bulk/kOmegaSST/kay/Pr,0.025 0.71 1 2 5 7 10)),\
+	$(eval $(call caserule1, $(c))))
+
+$(foreach c,\
+	$(addsuffix /mesh2,$(addprefix Ret395/bulk/kOmegaSST/kay/Pr,0.025 0.71 1 2 5 7 10)),\
+	$(eval $(call caserule2, $(c),$(subst /mesh2,/mesh1,$(c)))))
+
+$(foreach c,\
+	$(addsuffix /mesh3,$(addprefix Ret395/bulk/kOmegaSST/kay/Pr,0.025 0.71 1 2 5 7 10)),\
+	$(eval $(call caserule2, $(c),$(subst /mesh3,/mesh2,$(c)))))
+
+$(foreach c,\
+	$(addsuffix /mesh4,$(addprefix Ret395/bulk/kOmegaSST/kay/Pr,0.025 0.71 1 2 5 7 10)),\
+	$(eval $(call caserule2, $(c),$(subst /mesh4,/mesh3,$(c)))))
 
 $(call residual, Ret395/bulk/LSkEps/mesh1):
 	$(call runcase, $(call casedir, $@),)
@@ -103,7 +132,7 @@ clean_plots:
 	@for case in Ret{395,640}/{bulk,tau}/LSkEps; do pushd $$case; $(RM) *.png; popd; done
 	@for case in Ret{395,640}; do pushd $$case; $(RM) *.png; popd; done
 
-.PHONY: all cases clean clean_cases plots clean_plots
+.PHONY: all cases additional kay clean clean_cases plots clean_plots
 
 
 $(call residual, Ret640/bulk/epsWall/mesh1):
