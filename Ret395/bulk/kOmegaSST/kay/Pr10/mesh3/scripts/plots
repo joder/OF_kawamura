@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Meant to be run in Allrun script otherwise paths are wrong
+
+base="${1:-$PWD}"
+kawamura="${base%/Ret395/*}/Ret395/Kawamura_data"
+
+if [[ -d "$base/postProcessing/residuals/0" ]]; then
+	pushd "$base/postProcessing/residuals/0"
+	if [[ -r residuals.dat ]]; then
+		gnuplot -c "$base/scripts/residuals.gpi"
+	fi
+	popd
+fi
+
+if [[ -d "$base/postProcessing/singleGraph" ]]; then
+	export GNUPLOT_LIB="$base/scripts:$kawamura"
+	for i in "$base"/postProcessing/singleGraph/*/; do
+		pushd "$i"
+		for f in line_*.xy; do
+			a="${f#line_}"
+			b="${a%.xy}"
+			let j=2
+			while read -r v; do
+				gnuplot -c "$base/scripts/$v.gpi" "$f" "$j"
+				let j=j+1
+			done <<<${b//_/$'\n'}
+		done
+		popd
+	done
+fi
