@@ -36,6 +36,7 @@ CASE640TAU:=$(addprefix Ret640/,$(TAU) tau/LSkEps/mesh5)
 CASE640BULK:=$(addprefix Ret640/,$(BULK) bulk/LSkEps/mesh5)
 CASES:=$(CASE395TAU) $(CASE395BULK) $(CASE640TAU) $(CASE640BULK)
 KAY:=$(foreach i,1 2 3 4, $(addsuffix /mesh$(i),$(addprefix Ret395/bulk/kOmegaSST/kay/Pr,0.025 0.71 1 2 5 7 10)))
+KAY+=$(foreach i,1 2 3 4 5, $(addsuffix /mesh$(i),$(addprefix Ret640/bulk/kOmegaSST/kay/Pr,0.025 0.71)))
 ADD_CASES:=$(addprefix Ret640/bulk/epsWall/mesh,1 2 3 4 5)
 ADD_CASES+=$(addprefix Ret640/bulk/streamwise/mesh1-,2 3 4)
 ADD_CASES+=$(addprefix Ret640/bulk/streamwise/mesh4-,2 3 4)
@@ -52,20 +53,24 @@ additional: $(ADD_RESIDUALS)
 kay: $(addsuffix /postProcessing/residuals/0/residuals.png,$(KAY))
 
 $(foreach c,\
-	$(addsuffix /mesh1,$(addprefix Ret395/bulk/kOmegaSST/kay/Pr,0.025 0.71 1 2 5 7 10)),\
+	$(addsuffix /mesh1,$(addprefix Ret395/bulk/kOmegaSST/kay/Pr,0.025 0.71 1 2 5 7 10) $(addprefix Ret640/bulk/kOmegaSST/kay/Pr,0.025 0.71)),\
 	$(eval $(call caserule1, $(c))))
 
 $(foreach c,\
-	$(addsuffix /mesh2,$(addprefix Ret395/bulk/kOmegaSST/kay/Pr,0.025 0.71 1 2 5 7 10)),\
+	$(addsuffix /mesh2,$(addprefix Ret395/bulk/kOmegaSST/kay/Pr,0.025 0.71 1 2 5 7 10) $(addprefix Ret640/bulk/kOmegaSST/kay/Pr,0.025 0.71)),\
 	$(eval $(call caserule2, $(c),$(subst /mesh2,/mesh1,$(c)))))
 
 $(foreach c,\
-	$(addsuffix /mesh3,$(addprefix Ret395/bulk/kOmegaSST/kay/Pr,0.025 0.71 1 2 5 7 10)),\
+	$(addsuffix /mesh3,$(addprefix Ret395/bulk/kOmegaSST/kay/Pr,0.025 0.71 1 2 5 7 10) $(addprefix Ret640/bulk/kOmegaSST/kay/Pr,0.025 0.71)),\
 	$(eval $(call caserule2, $(c),$(subst /mesh3,/mesh2,$(c)))))
 
 $(foreach c,\
-	$(addsuffix /mesh4,$(addprefix Ret395/bulk/kOmegaSST/kay/Pr,0.025 0.71 1 2 5 7 10)),\
+	$(addsuffix /mesh4,$(addprefix Ret395/bulk/kOmegaSST/kay/Pr,0.025 0.71 1 2 5 7 10) $(addprefix Ret640/bulk/kOmegaSST/kay/Pr,0.025 0.71)),\
 	$(eval $(call caserule2, $(c),$(subst /mesh4,/mesh3,$(c)))))
+
+$(foreach c,\
+	$(addsuffix /mesh5,$(addprefix Ret640/bulk/kOmegaSST/kay/Pr,0.025 0.71)),\
+	$(eval $(call caserule2, $(c),$(subst /mesh5,/mesh4,$(c)))))
 
 $(call residual, Ret395/bulk/LSkEps/mesh1):
 	$(call runcase, $(call casedir, $@),)
@@ -132,7 +137,10 @@ clean_plots:
 	@for case in Ret{395,640}/{bulk,tau}/LSkEps; do pushd $$case; $(RM) *.png; popd; done
 	@for case in Ret{395,640}; do pushd $$case; $(RM) *.png; popd; done
 
-.PHONY: all cases additional kay clean clean_cases plots clean_plots
+clean_kay:
+	@for case in $(KAY); do pushd $$case; ./Allclean; popd; done
+
+.PHONY: all cases kay clean clean_cases plots clean_plots clean_kay
 
 
 $(call residual, Ret640/bulk/epsWall/mesh1):
