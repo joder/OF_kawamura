@@ -1,8 +1,8 @@
 rU='line_U.xy'
-rp(i)='line_p_T_k_omega_nut.xy'
+rp(i)='line_p_T_k_omega_nut_alphat.xy'
 
 dir(i)=word("mesh1 mesh2 mesh3 mesh4",i)
-titl(i)=sprintf("N = %3s",word("50 100 200 300",i)
+titl(i)=sprintf("N = %3s",word("50 100 200 300",i))
 times(i)=system(sprintf("foamListTimes -case '%s' -latestTime",dir(i)))
 srcU(i)=sprintf('%s/postProcessing/singleGraph/%s/%s',dir(i),times(i),rU)
 srcp(i)=sprintf('%s/postProcessing/singleGraph/%s/%s',dir(i),times(i),rp(i))
