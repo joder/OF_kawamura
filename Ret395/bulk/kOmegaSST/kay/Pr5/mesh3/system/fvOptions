@@ -22,11 +22,11 @@ FoamFile
    Pr     =[0.025 0.71  1     2     5     7     10   ]
    Reb    =[13967 13967 14124 14124 14124 14124 14124]
    ub     = Reb * nu / ( 2 * h )
-   SsF    =-Tunit*nu*Ret/h^2
+   SsF    = Tunit*nu*Ret/h^2
 
    Results:
    ub     = 4.016955371900826e-02
-   SsF    =-7.510962365958609e-02
+   SsF    = 7.510962365958609e-02
 */
 
 momentumSource
