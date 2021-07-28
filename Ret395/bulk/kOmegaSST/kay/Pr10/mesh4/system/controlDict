@@ -78,6 +78,6 @@ functions
         writeFields no;
         regionType  all;
         operation   volAverage;
-        fields      (U p_rgh h k omega T);
+        fields      (U p_rgh h k omega T alphat);
     }
 };
