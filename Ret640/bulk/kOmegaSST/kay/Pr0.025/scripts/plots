@@ -4,6 +4,6 @@ base="${1:-$PWD}"
 kawamura="${base%/Ret640/*}/Ret640/Kawamura_data"
 
 export GNUPLOT_LIB="$base/scripts:$kawamura"
-for i in "$base/scripts"/{U,k,omega,nut,T}.gpi; do
+for i in "$base/scripts"/{U,k,omega,nut,T,alphat}.gpi; do
 	gnuplot -c "$i"
 done

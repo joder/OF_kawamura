@@ -22,11 +22,11 @@ FoamFile
    Pr     =[0.025 0.71 ]
    Reb    =[24428 24428]
    ub     = Reb * nu / ( 2 * h )
-   SsF    =-Tunit*nu*Ret/h^2
+   SsF    = Tunit*nu*Ret/h^2
 
    Results:
    ub     = 7.025573553719008e-02
-   Ssf    =-1.216966054231268e-01
+   Ssf    = 1.216966054231268e-01
 */
 
 momentumSource
@@ -73,7 +73,7 @@ energySource
             const scalar Uavg = U.weightedAverage(mesh_.V()).value().component(vector::X);
 
             scalarField& hSource = eqn.source();
-            hSource += ( -1.216966054231268e-01 / Uavg ) * ( U.component(vector::X) * V );
+            hSource += ( 1.216966054231268e-01 / Uavg ) * ( U.component(vector::X) * V );
         #};
 
         codeSetValue
