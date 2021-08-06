@@ -31,15 +31,13 @@ boundaryField
     }
     bottom
     {
-        type            compressible::alphatJayatillekeWallFunction;
-        Prt             0.85;
-        value           uniform 1e-20;
+        type            calculated;
+        value           uniform 0;
     }
     top
     {
-        type            compressible::alphatJayatillekeWallFunction;
-        Prt             0.85;
-        value           uniform 1e-20;
+        type            calculated;
+        value           uniform 0;
     }
     frontAndBack
     {
