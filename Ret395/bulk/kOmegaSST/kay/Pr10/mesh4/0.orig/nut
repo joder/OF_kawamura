@@ -31,12 +31,12 @@ boundaryField
     }
     bottom
     {
-        type            fixedValue;
+        type            nutLowReWallFunction;
         value           uniform     0;
     }
     top
     {
-        type            fixedValue;
+        type            nutLowReWallFunction;
         value           uniform     0;
     }
     frontAndBack
