@@ -31,12 +31,12 @@ boundaryField
     }
     bottom
     {
-        type            calculated;
+        type            fixedValue;
         value           uniform     0;
     }
     top
     {
-        type            calculated;
+        type            fixedValue;
         value           uniform     0;
     }
     frontAndBack
