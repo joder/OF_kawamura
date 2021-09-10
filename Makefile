@@ -47,6 +47,7 @@ RESIDUALS:=$(addsuffix /postProcessing/residuals/0/residuals.png,$(CASES))
 ADD_RESIDUALS:=$(addsuffix /postProcessing/residuals/0/residuals.png,$(ADD_CASES))
 
 all: cases
+allinall: all additional kay
 cases: $(RESIDUALS)
 additional: $(ADD_RESIDUALS)
 
@@ -140,7 +141,7 @@ clean_plots:
 clean_kay:
 	@for case in $(KAY); do pushd $$case; ./Allclean; popd; done
 
-.PHONY: all cases kay clean clean_cases plots clean_plots clean_kay
+.PHONY: all cases kay allinall clean clean_cases plots clean_plots clean_kay
 
 
 $(call residual, Ret640/bulk/epsWall/mesh1):
