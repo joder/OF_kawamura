@@ -1,0 +1,24 @@
+rU='line_U.xy'
+rp(i)=(i==1?'line_p_T_k_epsilon_nut_T0025_T071_T1_T2_T5_T7_T10.xy':'line_p_T_k_omega_nut_T0025_T071_T1_T2_T5_T7_T10.xy')
+
+dir(i)=word("LSkEps/mesh5 kOmegaSST/reAnalogy/mesh5",i)
+titl(i)=(i==1?"LS k-{/Symbol e}":"k-{Symbol w}")
+times(i)=system(sprintf("foamListTimes -case '%s' -latestTime",dir(i)))
+srcU(i)=sprintf('%s/postProcessing/singleGraph/%s/%s',dir(i),times(i),rU)
+srcp(i)=sprintf('%s/postProcessing/singleGraph/%s/%s',dir(i),times(i),rp(i))
+linstyl(i)=i+1
+
+wMesh="l"
+wDNS="p"
+lsDNS=1
+lsT1=7
+colk=5
+N=2
+
+set linestyle 1 lc rgb "black"
+set linestyle 2 lw 1.5 lc rgb "red"
+set linestyle 3 lw 1.5 lc rgb "blue"
+set linestyle 4 lw 1.5 lc rgb "magenta"
+set linestyle 5 lw 1.5 lc rgb "green"
+set linestyle 6 lw 1.5 lc rgb "orange"
+set linestyle 7 lw 1.5 lc rgb "yellow"

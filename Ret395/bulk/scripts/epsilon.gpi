@@ -1,0 +1,28 @@
+load 'common.gpi'
+
+epsp(u,v,w)=(u+v+w)
+col=5
+eps_norm(c)=column(c)/(nu*utau**2/h**2)/Retau**2
+omega_norm(c,ck)=column(c)*column(ck)*0.09/(nu*utau**2/h**2)/Retau**2
+
+set ylabel '{/Symbol e}^+'
+
+set output 'comp_epsilon.png'
+plot\
+  Keps u 1:(-epsp($2,$3,$4)) w @wDNS t 'Kawamura' ls lsDNS \
+, for [i=1:1] srcp(i) u (yp($1)):(eps_norm(col)) w @wMesh t titl(i) ls linstyl(i) \
+, for [i=2:2] srcp(i) u (yp($1)):(omega_norm(col,colk)) w @wMesh t titl(i) ls linstyl(i)
+
+set output 'comp_epsilon_semilog.png'
+set logscale x
+plot\
+  Keps u 1:(-epsp($2,$3,$4)) w @wDNS t 'Kawamura' ls lsDNS \
+, for [i=1:1] srcp(i) u (yplog($1)):(eps_norm(col)) w @wMesh t titl(i) ls linstyl(i) \
+, for [i=2:2] srcp(i) u (yplog($1)):(omega_norm(col,colk)) w @wMesh t titl(i) ls linstyl(i)
+
+set output 'comp_epsilon_log.png'
+set logscale xy
+plot\
+  Keps u 1:(-epsp($2,$3,$4)) w @wDNS t 'Kawamura' ls lsDNS \
+, for [i=1:1] srcp(i) u (yp($1)):(eps_norm(col)) w @wMesh t titl(i) ls linstyl(i) \
+, for [i=2:2] srcp(i) u (yp($1)):(omega_norm(col,colk)) w @wMesh t titl(i) ls linstyl(i)
