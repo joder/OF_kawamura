@@ -28,7 +28,7 @@ boundaryField
     bottom
     {
         type             fixedValue;
-        gradient         $internalField;
+        value            $internalField;
     }
     outlet
     {
@@ -38,7 +38,7 @@ boundaryField
     top
     {
         type             fixedValue;
-        gradient         $internalField;
+        value            $internalField;
     }
     frontAndBack
     {
