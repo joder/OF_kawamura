@@ -73,7 +73,7 @@ energySource
             const scalar Uavg = U.weightedAverage(mesh_.V()).value().component(vector::X);
 
             scalarField& hSource = eqn.source();
-            hSource += ( 7.510962365958609e-02 / Uavg ) * ( U.component(vector::X) * V );
+            hSource += ( 1.216966054231268e-01 / Uavg ) * ( U.component(vector::X) * V );
         #};
 
         codeSetValue
