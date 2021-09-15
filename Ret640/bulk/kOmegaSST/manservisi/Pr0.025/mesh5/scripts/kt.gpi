@@ -1,0 +1,29 @@
+if(ARGC!=2) {
+	print sprintf("Not enough arguments!\nUsage: gnuplot -c \"%s\" line_NAME.xy N\nExiting gnuplot", ARG0)
+	exit gnuplot
+}
+fn=ARG1
+col=ARG2+0
+
+load 'common.gpi'
+
+kt(trms)=0.5*trms**2
+
+set ylabel 'k_{/Symbol q}^{+}'
+
+set output 'comp_kt.png'
+plot\
+  KT0025 u 2:(kt($4)) t 'Kawamura' ls 1 \
+, fn u (yp($1)):(column(col)) t 'Current' ls 2
+
+set output 'comp_kt_semilog.png'
+set logscale x
+plot\
+  KT0025 u 2:(kt($4)) t 'Kawamura' ls 1 \
+, fn u (yplog($1)):(column(col)) t 'Current' ls 2
+
+set output 'comp_kt_log.png'
+set logscale xy
+plot\
+  KT0025 u 2:(kt($4)) t 'Kawamura' ls 1 \
+, fn u (yp($1)):(column(col)) t 'Current' ls 2
