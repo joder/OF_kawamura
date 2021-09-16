@@ -157,10 +157,13 @@ clean_plots:
 clean_kay:
 	@for case in $(KAY); do pushd $$case; ./Allclean; popd; done
 
+clean_manservisi:
+	@for case in $(MANSERVISI); do pushd $$case; ./Allclean; popd; done
+
 clean_ahfm:
 	@for case in $(AHFM); do pushd $$case; ./Allclean; popd; done
 
-.PHONY: all cases kay ahfm allinall clean clean_cases plots clean_plots clean_kay clean_ahfm
+.PHONY: all cases kay manservisi ahfm allinall clean clean_cases plots clean_plots clean_kay clean_manservisi clean_ahfm
 
 
 $(call residual, Ret640/bulk/epsWall/mesh1):
