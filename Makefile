@@ -39,6 +39,8 @@ KAY:=$(foreach i,1 2 3 4, $(addsuffix /mesh$(i),$(addprefix Ret395/bulk/kOmegaSS
 KAY+=$(foreach i,1 2 3 4 5, $(addsuffix /mesh$(i),$(addprefix Ret640/bulk/kOmegaSST/kay/Pr,0.025 0.71)))
 MANSERVISI:=$(addsuffix /mesh4,$(addprefix Ret395/bulk/kOmegaSST/manservisi/Pr,0.025 0.71 1 2 5 7 10))
 MANSERVISI+=$(addsuffix /mesh5,$(addprefix Ret640/bulk/kOmegaSST/manservisi/Pr,0.025 0.71))
+AHFM:=$(addsuffix /mesh4,$(addprefix Ret395/bulk/kOmegaSST/AHFM/Pr,0.025 0.71 1 2 5 7 10))
+AHFM+=$(addsuffix /mesh4,$(addprefix Ret640/bulk/kOmegaSST/AHFM/Pr,0.025 0.71))
 ADD_CASES:=$(addprefix Ret640/bulk/epsWall/mesh,1 2 3 4 5)
 ADD_CASES+=$(addprefix Ret640/bulk/streamwise/mesh1-,2 3 4)
 ADD_CASES+=$(addprefix Ret640/bulk/streamwise/mesh4-,2 3 4)
@@ -49,13 +51,19 @@ RESIDUALS:=$(addsuffix /postProcessing/residuals/0/residuals.png,$(CASES))
 ADD_RESIDUALS:=$(addsuffix /postProcessing/residuals/0/residuals.png,$(ADD_CASES))
 
 all: cases
-allinall: all additional kay manservisi
+allinall: all additional kay manservisi ahfm
 cases: $(RESIDUALS)
 additional: $(ADD_RESIDUALS)
 
 kay: $(addsuffix /postProcessing/residuals/0/residuals.png,$(KAY))
 
 manservisi: $(addsuffix /postProcessing/residuals/0/residuals.png,$(MANSERVISI))
+
+ahfm: $(addsuffix /postProcessing/residuals/0/residuals.png,$(AHFM))
+
+$(foreach c, $(AHFM),\
+	$(eval $(call caserule2, $(c),\
+		$(shell sed -e's!/AHFM/Pr[0-9.]*/!/reAnalogy/!' <<<"$(c)"))))
 
 $(foreach c, $(MANSERVISI),\
 	$(eval $(call caserule2, $(c),\
@@ -149,7 +157,10 @@ clean_plots:
 clean_kay:
 	@for case in $(KAY); do pushd $$case; ./Allclean; popd; done
 
-.PHONY: all cases kay allinall clean clean_cases plots clean_plots clean_kay
+clean_ahfm:
+	@for case in $(AHFM); do pushd $$case; ./Allclean; popd; done
+
+.PHONY: all cases kay ahfm allinall clean clean_cases plots clean_plots clean_kay clean_ahfm
 
 
 $(call residual, Ret640/bulk/epsWall/mesh1):
