@@ -24,6 +24,11 @@ $(call residual, $(1)): $(call residual, $(2))
 	$$(call runcase, $$(call casedir, $$@), $$(call casedir, $$<))
 endef
 
+define caserule2a
+$(call residual, $(1)): $(call residual, $(2))
+	$$(call runcase, $$(call casedir, $$@),)
+endef
+
 # This makefile is written without actual dependencies. Mainly because I am lazy.
 
 MESH:=$(addprefix mesh,1 2 3 4)
@@ -62,11 +67,11 @@ manservisi: $(addsuffix /postProcessing/residuals/0/residuals.png,$(MANSERVISI))
 ahfm: $(addsuffix /postProcessing/residuals/0/residuals.png,$(AHFM))
 
 $(foreach c, $(AHFM),\
-	$(eval $(call caserule2, $(c),\
+	$(eval $(call caserule2a, $(c),\
 		$(shell sed -e's!/AHFM/Pr[0-9.]*/!/reAnalogy/!' <<<"$(c)"))))
 
 $(foreach c, $(MANSERVISI),\
-	$(eval $(call caserule2, $(c),\
+	$(eval $(call caserule2a, $(c),\
 		$(shell sed -e's!/manservisi/Pr[0-9.]*/!/reAnalogy/!' <<<"$(c)"))))
 
 $(foreach c,\
