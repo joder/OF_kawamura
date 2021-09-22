@@ -18,7 +18,7 @@ dimensions      [0 0 0 1 0 0 0];
 
 internalField   uniform 0;
 
-enforcedBC      uniform -3.264462809917356e+02;
+enforcedBC      uniform -5.289256198347108e+02;
 
 boundaryField
 {
