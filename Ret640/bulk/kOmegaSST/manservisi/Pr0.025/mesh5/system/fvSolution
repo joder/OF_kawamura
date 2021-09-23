@@ -34,6 +34,7 @@ solvers
         preconditioner  DILU;
         tolerance       1e-08;
         relTol          0.0;
+        minIter         1;
     }
 }
 
@@ -56,11 +57,12 @@ relaxationFactors
 {
     equations
     {
-        U               0.2;
-        p_rgh		0.2;
+        U               0.1;
+        p_rgh		0.1;
         h               0.3;
         "T[0-9]+"       0.3;
        "(k|R|omega|epsilon)"   0.5;
+       "(kt|omegat)"           0.5;
     }
 }
 // ************************************************************************* //
