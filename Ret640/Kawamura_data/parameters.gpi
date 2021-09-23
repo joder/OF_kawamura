@@ -8,7 +8,10 @@ KT071='uhf071_TS_1.dat'
 Kk='TS.dat'
 Keps='eps.dat'
 Knut='TSeps.dat'
-Knut2='TS_2.dat'
+Knut2='nut.dat'
 
 KB0025='uhf0025_kt.dat'
 KB071='uhf071_kt.dat'
+
+at0025='uhf0025_alphat.dat'
+at071='uhf071_alphat.dat'
