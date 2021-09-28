@@ -9,11 +9,9 @@ cd ${0%/*} || exit 1    # Run from this directory
 application=$(getApplication)
 
 runApplication blockMesh
-if [[ -n "$1" && -d "$1" ]]; then
-	runApplication mapFields "$1" -consistent -sourceTime latestTime
-else
-	cp -r 0.orig/ 0
-fi
+cp -r 0.orig/ 0
+runApplication mapFields "../../../reAnalogy/mesh4/" -consistent -sourceTime latestTime
+./scripts/scalarToT.awk -v name=T1 0/T1 > 0/T
 runApplication $application
 runApplication postProcess -func singleGraph
 scripts/plots > log.plots 2>&1
