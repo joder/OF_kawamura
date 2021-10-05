@@ -40,8 +40,8 @@ CASE395BULK:=$(addprefix Ret395/,$(BULK))
 CASE640TAU:=$(addprefix Ret640/,$(TAU) tau/LSkEps/mesh5)
 CASE640BULK:=$(addprefix Ret640/,$(BULK) bulk/LSkEps/mesh5)
 CASES:=$(CASE395TAU) $(CASE395BULK) $(CASE640TAU) $(CASE640BULK)
-KAY:=$(foreach i,1 2 3 4, $(addsuffix /mesh$(i),$(addprefix Ret395/bulk/kOmegaSST/kay/Pr,0.025 0.71 1 2 5 7 10)))
-KAY+=$(foreach i,1 2 3 4 5, $(addsuffix /mesh$(i),$(addprefix Ret640/bulk/kOmegaSST/kay/Pr,0.025 0.71)))
+KAY:=$(addsuffix /mesh4,$(addprefix Ret395/bulk/kOmegaSST/kay/Pr,0.025 0.71 1 2 5 7 10)))
+KAY+=$(addsuffix /mesh5,$(addprefix Ret640/bulk/kOmegaSST/kay/Pr,0.025 0.71)))
 MANSERVISI:=$(addsuffix /mesh4,$(addprefix Ret395/bulk/kOmegaSST/manservisi/Pr,0.025 0.71 1 2 5 7 10))
 MANSERVISI+=$(addsuffix /mesh5,$(addprefix Ret640/bulk/kOmegaSST/manservisi/Pr,0.025 0.71))
 AHFM:=$(addsuffix /mesh4,$(addprefix Ret395/bulk/kOmegaSST/AHFM/Pr,0.025 0.71 1 2 5 7 10))
@@ -74,25 +74,9 @@ $(foreach c, $(MANSERVISI),\
 	$(eval $(call caserule2a, $(c),\
 		$(shell sed -e's!/manservisi/Pr[0-9.]*/!/reAnalogy/!' <<<"$(c)"))))
 
-$(foreach c,\
-	$(addsuffix /mesh1,$(addprefix Ret395/bulk/kOmegaSST/kay/Pr,0.025 0.71 1 2 5 7 10) $(addprefix Ret640/bulk/kOmegaSST/kay/Pr,0.025 0.71)),\
-	$(eval $(call caserule1, $(c))))
-
-$(foreach c,\
-	$(addsuffix /mesh2,$(addprefix Ret395/bulk/kOmegaSST/kay/Pr,0.025 0.71 1 2 5 7 10) $(addprefix Ret640/bulk/kOmegaSST/kay/Pr,0.025 0.71)),\
-	$(eval $(call caserule2, $(c),$(subst /mesh2,/mesh1,$(c)))))
-
-$(foreach c,\
-	$(addsuffix /mesh3,$(addprefix Ret395/bulk/kOmegaSST/kay/Pr,0.025 0.71 1 2 5 7 10) $(addprefix Ret640/bulk/kOmegaSST/kay/Pr,0.025 0.71)),\
-	$(eval $(call caserule2, $(c),$(subst /mesh3,/mesh2,$(c)))))
-
-$(foreach c,\
-	$(addsuffix /mesh4,$(addprefix Ret395/bulk/kOmegaSST/kay/Pr,0.025 0.71 1 2 5 7 10) $(addprefix Ret640/bulk/kOmegaSST/kay/Pr,0.025 0.71)),\
-	$(eval $(call caserule2, $(c),$(subst /mesh4,/mesh3,$(c)))))
-
-$(foreach c,\
-	$(addsuffix /mesh5,$(addprefix Ret640/bulk/kOmegaSST/kay/Pr,0.025 0.71)),\
-	$(eval $(call caserule2, $(c),$(subst /mesh5,/mesh4,$(c)))))
+$(foreach c, $(KAY),\
+	$(eval $(call caserule2a, $(c),\
+		$(shell sed -e's!/kay/Pr[0-9.]*/!/reAnalogy/!' <<<"$(c)"))))
 
 $(call residual, Ret395/bulk/LSkEps/mesh1):
 	$(call runcase, $(call casedir, $@),)
