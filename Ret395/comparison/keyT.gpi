@@ -1,0 +1,15 @@
+load 'commonT.gpi'
+
+set key tmargin horizontal
+
+unset border
+unset tics
+unset xlabel
+
+set xrange [0:1]
+set yrange [0:1]
+
+set output 'keyT.png'
+plot\
+  NaN w @wDNS t 'Kawamura' ls lsDNS \
+, for [i=1:N] NaN w @wMesh t titl(i) ls linstyl(i)

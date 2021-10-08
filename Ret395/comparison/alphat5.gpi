@@ -1,0 +1,25 @@
+load 'commonT.gpi'
+
+set ylabel '{/Symbol a}_t^+'
+npr=5
+
+alphat(x)=x/nu
+alphatd(i)=(i<4?column(6)/0.85:column(7))
+a(i,npr)=alphat(alphatd(i))
+
+set output 'comp_alphat5.png'
+plot\
+  at5 u 1:2 w @wDNS t 'Kawamura' ls lsDNS \
+, for [i=1:N] srcp(i,npr) u (yp($1)):(a(i,npr)) w @wMesh t titl(i) ls linstyl(i)
+
+set output 'comp_alphat5_semilog.png'
+set logscale x
+plot\
+  at5 u 1:2 t 'Kawamura' \
+, for [i=1:N] srcp(i,npr) u (yplog($1)):(a(i,npr)) w @wMesh t titl(i) ls linstyl(i)
+
+set output 'comp_alphat5_log.png'
+set logscale xy
+plot\
+  at5 u 1:2 t 'Kawamura' \
+, for [i=1:N] srcp(i,npr) u (yp($1)):(a(i,npr)) w @wMesh t titl(i) ls linstyl(i)

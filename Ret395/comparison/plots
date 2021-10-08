@@ -1,0 +1,11 @@
+#!/bin/bash
+
+base="${1:-$PWD}"
+
+export GNUPLOT_LIB=".:../Kawamura_data"
+for i in {U,k,epsilon,nut,{alphat,T}{0025,071,1,2,5,7,10},key{,T}}.gpi; do
+	gnuplot -c "$i"
+done
+
+convert key.png -trim -border 1x1 -bordercolor white +repage key.png
+convert keyT.png -trim -border 1x1 -bordercolor white +repage keyT.png

@@ -1,0 +1,23 @@
+load 'commonT.gpi'
+
+set ylabel 'T^{+} / Pr'
+npr=2
+
+temp(i,j)=subst(column(col(i,j)))/prn(j)*(i<4?1:-1)
+
+set output 'comp_T071.png'
+plot\
+  KT071 u 2:($3/prn(npr)) w @wDNS t 'Kawamura' ls lsDNS \
+, for [i=1:N] srcp(i,npr) u (yp($1)):(temp(i,npr)) w @wMesh t titl(i) ls linstyl(i)
+
+set output 'comp_T071_semilog.png'
+set logscale x
+plot\
+  KT071 u 2:($3/prn(npr)) w @wDNS t 'Kawamura' ls lsDNS \
+, for [i=1:N] srcp(i,npr) u (yplog($1)):(temp(i,npr)) w @wMesh t titl(i) ls linstyl(i)
+
+set output 'comp_T071_log.png'
+set logscale xy
+plot\
+  KT071 u 2:($3/prn(npr)) w @wDNS t 'Kawamura' ls lsDNS \
+, for [i=1:N] srcp(i,npr) u (yp($1)):(temp(i,npr)) w @wMesh t titl(i) ls linstyl(i)
