@@ -1,8 +1,9 @@
 #!/bin/bash
 
 base="${1:-$PWD}"
+kawamura="${base%/Ret395/*}/Ret395/Kawamura_data"
 
-export GNUPLOT_LIB="$base/scripts:$base/../../Kawamura_data"
+export GNUPLOT_LIB="$base/scripts:$kawamura"
 for i in "$base/scripts"/{U,k,omega,nut,T{0025,071,1,2,5,7,10}}.gpi; do
 	gnuplot -c "$i"
 done

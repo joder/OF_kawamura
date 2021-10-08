@@ -3,7 +3,7 @@
 # Meant to be run in Allrun script otherwise paths are wrong
 
 base="${1:-$PWD}"
-kawamura="${base%/Ret395/*}/Ret395/Kawamura_data"
+kawamura="${base%/Ret640/*}/Ret640/Kawamura_data"
 
 if [[ -d "$base/postProcessing/residuals/0" ]]; then
 	pushd "$base/postProcessing/residuals/0"

@@ -3,6 +3,7 @@
 # Meant to be run in Allrun script otherwise paths are wrong
 
 base="${1:-$PWD}"
+kawamura="${base%/Ret395/*}/Ret395/Kawamura_data"
 
 if [[ -d "$base/postProcessing/residuals/0" ]]; then
 	pushd "$base/postProcessing/residuals/0"
@@ -13,7 +14,7 @@ if [[ -d "$base/postProcessing/residuals/0" ]]; then
 fi
 
 if [[ -d "$base/postProcessing/singleGraph" ]]; then
-	export GNUPLOT_LIB="$base/scripts:$base/../../Kawamura_data"
+	export GNUPLOT_LIB="$base/scripts:$kawamura"
 	for i in "$base"/postProcessing/singleGraph/*/; do
 		pushd "$i"
 		for f in line_*.xy; do
