@@ -68,7 +68,7 @@ ahfm: $(addsuffix /postProcessing/residuals/0/residuals.png,$(AHFM))
 
 $(foreach c, $(AHFM),\
 	$(eval $(call caserule2a, $(c),\
-		$(shell sed -e's!/AHFM/Pr[0-9.]*/!/reAnalogy/!' <<<"$(c)"))))
+		$(shell sed -e's!/AHFM/!/manservisi/!' <<<"$(c)"))))
 
 $(foreach c, $(MANSERVISI),\
 	$(eval $(call caserule2a, $(c),\
