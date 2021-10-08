@@ -91,46 +91,46 @@ $(call residual, Ret640/tau/LSkEps/mesh1):
 	$(call runcase, $(call casedir, $@),)
 
 $(call residual, Ret395/bulk/LSkEps/mesh2): $(call residual, Ret395/bulk/LSkEps/mesh1)
-	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+	$(call runcase, $(call casedir, $@),)
 
 $(call residual, Ret395/tau/LSkEps/mesh2): $(call residual, Ret395/tau/LSkEps/mesh1)
-	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+	$(call runcase, $(call casedir, $@),)
 
 $(call residual, Ret640/bulk/LSkEps/mesh2): $(call residual, Ret640/bulk/LSkEps/mesh1)
-	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+	$(call runcase, $(call casedir, $@),)
 
 $(call residual, Ret640/tau/LSkEps/mesh2): $(call residual, Ret640/tau/LSkEps/mesh1)
-	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+	$(call runcase, $(call casedir, $@),)
 
 $(call residual, Ret395/bulk/LSkEps/mesh3): $(call residual, Ret395/bulk/LSkEps/mesh2)
-	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+	$(call runcase, $(call casedir, $@),)
 
 $(call residual, Ret395/tau/LSkEps/mesh3): $(call residual, Ret395/tau/LSkEps/mesh2)
-	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+	$(call runcase, $(call casedir, $@),)
 
 $(call residual, Ret640/bulk/LSkEps/mesh3): $(call residual, Ret640/bulk/LSkEps/mesh2)
-	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+	$(call runcase, $(call casedir, $@),)
 
 $(call residual, Ret640/tau/LSkEps/mesh3): $(call residual, Ret640/tau/LSkEps/mesh2)
-	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+	$(call runcase, $(call casedir, $@),)
 
 $(call residual, Ret395/bulk/LSkEps/mesh4): $(call residual, Ret395/bulk/LSkEps/mesh3)
-	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+	$(call runcase, $(call casedir, $@),)
 
 $(call residual, Ret395/tau/LSkEps/mesh4): $(call residual, Ret395/tau/LSkEps/mesh3)
-	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+	$(call runcase, $(call casedir, $@),)
 
 $(call residual, Ret640/bulk/LSkEps/mesh4): $(call residual, Ret640/bulk/LSkEps/mesh3)
-	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+	$(call runcase, $(call casedir, $@),)
 
 $(call residual, Ret640/tau/LSkEps/mesh4): $(call residual, Ret640/tau/LSkEps/mesh3)
-	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+	$(call runcase, $(call casedir, $@),)
 
 $(call residual, Ret640/bulk/LSkEps/mesh5): $(call residual, Ret640/bulk/LSkEps/mesh4)
-	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+	$(call runcase, $(call casedir, $@),)
 
 $(call residual, Ret640/tau/LSkEps/mesh5): $(call residual, Ret640/tau/LSkEps/mesh4)
-	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+	$(call runcase, $(call casedir, $@),)
 
 plots: $(RESIDUALS)
 	@for case in Ret{395,640}/{bulk,tau}/LSkEps; do pushd $$case; ./scripts/plots; popd; done
@@ -159,16 +159,16 @@ $(call residual, Ret640/bulk/epsWall/mesh1):
 	$(call runcase, $(call casedir, $@),)
 
 $(call residual, Ret640/bulk/epsWall/mesh2): $(call residual, Ret640/bulk/epsWall/mesh1)
-	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+	$(call runcase, $(call casedir, $@),)
 
 $(call residual, Ret640/bulk/epsWall/mesh3): $(call residual, Ret640/bulk/epsWall/mesh2)
-	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+	$(call runcase, $(call casedir, $@),)
 
 $(call residual, Ret640/bulk/epsWall/mesh4): $(call residual, Ret640/bulk/epsWall/mesh3)
-	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+	$(call runcase, $(call casedir, $@),)
 
 $(call residual, Ret640/bulk/epsWall/mesh5): $(call residual, Ret640/bulk/epsWall/mesh4)
-	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+	$(call runcase, $(call casedir, $@),)
 
 $(call residual, Ret640/bulk/streamwise/mesh1-2): $(call residual, Ret640/bulk/LSkEps/mesh1)
 	$(call runcase, $(call casedir, $@),$(call casedir, $<))
@@ -192,28 +192,28 @@ $(call residual, Ret395/bulk/kOmegaSST/reAnalogy/mesh1):
 	$(call runcase, $(call casedir, $@),)
 
 $(call residual, Ret395/bulk/kOmegaSST/reAnalogy/mesh2): $(call residual, Ret395/bulk/kOmegaSST/reAnalogy/mesh1)
-	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+	$(call runcase, $(call casedir, $@),)
 
 $(call residual, Ret395/bulk/kOmegaSST/reAnalogy/mesh3): $(call residual, Ret395/bulk/kOmegaSST/reAnalogy/mesh2)
-	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+	$(call runcase, $(call casedir, $@),)
 
 $(call residual, Ret395/bulk/kOmegaSST/reAnalogy/mesh4): $(call residual, Ret395/bulk/kOmegaSST/reAnalogy/mesh3)
-	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+	$(call runcase, $(call casedir, $@),)
 
 $(call residual, Ret640/bulk/kOmegaSST/reAnalogy/mesh1):
 	$(call runcase, $(call casedir, $@),)
 
 $(call residual, Ret640/bulk/kOmegaSST/reAnalogy/mesh2): $(call residual, Ret640/bulk/kOmegaSST/reAnalogy/mesh1)
-	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+	$(call runcase, $(call casedir, $@),)
 
 $(call residual, Ret640/bulk/kOmegaSST/reAnalogy/mesh3): $(call residual, Ret640/bulk/kOmegaSST/reAnalogy/mesh2)
-	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+	$(call runcase, $(call casedir, $@),)
 
 $(call residual, Ret640/bulk/kOmegaSST/reAnalogy/mesh4): $(call residual, Ret640/bulk/kOmegaSST/reAnalogy/mesh3)
-	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+	$(call runcase, $(call casedir, $@),)
 
 $(call residual, Ret640/bulk/kOmegaSST/reAnalogy/mesh5): $(call residual, Ret640/bulk/kOmegaSST/reAnalogy/mesh4)
-	$(call runcase, $(call casedir, $@),$(call casedir, $<))
+	$(call runcase, $(call casedir, $@),)
 
 clean: clean_additional
 clean_additional:
