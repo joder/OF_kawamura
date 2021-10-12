@@ -1,0 +1,29 @@
+if(ARGC!=2) {
+	print sprintf("Not enough arguments!\nUsage: gnuplot -c \"%s\" line_NAME.xy N\nExiting gnuplot", ARG0)
+	exit gnuplot
+}
+fn=ARG1
+col=ARG2+0
+
+load 'common.gpi'
+
+alphat(x)=x/nu
+
+set ylabel '{/Symbol a}_t^+'
+
+set output 'comp_alphat.png'
+plot\
+  at0025 u 1:2 t 'Kawamura Re_{/Symbol t}=395' \
+, fn u (yp($1)):(alphat(column(col))) t 'Current' ls 2
+
+set output 'comp_alphat_semilog.png'
+set logscale x
+plot\
+  at0025 u 1:2 t 'Kawamura Re_{/Symbol t}=395' \
+, fn u (yplog($1)):(alphat(column(col))) t 'Current' ls 2
+
+set output 'comp_alphat_log.png'
+set logscale xy
+plot\
+  at0025 u 1:2 t 'Kawamura Re_{/Symbol t}=395' \
+, fn u (yp($1)):(alphat(column(col))) t 'Current' ls 2

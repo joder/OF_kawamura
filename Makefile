@@ -44,6 +44,8 @@ KAY:=$(addsuffix /mesh4,$(addprefix Ret395/bulk/kOmegaSST/kay/Pr,0.025 0.71 1 2 
 KAY+=$(addsuffix /mesh5,$(addprefix Ret640/bulk/kOmegaSST/kay/Pr,0.025 0.71))
 MANSERVISI:=$(addsuffix /mesh4,$(addprefix Ret395/bulk/kOmegaSST/manservisi/Pr,0.025 0.71 1 2 5 7 10))
 MANSERVISI+=$(addsuffix /mesh5,$(addprefix Ret640/bulk/kOmegaSST/manservisi/Pr,0.025 0.71))
+KTWT:=$(addsuffix /mesh4,$(addprefix Ret395/bulk/kOmegaSST/kt-wt/Pr,0.025 0.71 1 2 5 7 10))
+KTWT+=$(addsuffix /mesh5,$(addprefix Ret640/bulk/kOmegaSST/kt-wt/Pr,0.025 0.71))
 AHFM:=$(addsuffix /mesh4,$(addprefix Ret395/bulk/kOmegaSST/AHFM/Pr,0.025 0.71 1 2 5 7 10))
 AHFM+=$(addsuffix /mesh5,$(addprefix Ret640/bulk/kOmegaSST/AHFM/Pr,0.025 0.71))
 ADD_CASES:=$(addprefix Ret640/bulk/epsWall/mesh,1 2 3 4 5)
@@ -56,13 +58,14 @@ RESIDUALS:=$(addsuffix /postProcessing/residuals/0/residuals.png,$(CASES))
 ADD_RESIDUALS:=$(addsuffix /postProcessing/residuals/0/residuals.png,$(ADD_CASES))
 
 all: cases
-allinall: all additional kay manservisi ahfm
+allinall: all additional kay manservisi ahfm ktwt
 cases: $(RESIDUALS)
 additional: $(ADD_RESIDUALS)
 
 kay: $(addsuffix /postProcessing/residuals/0/residuals.png,$(KAY))
 
 manservisi: $(addsuffix /postProcessing/residuals/0/residuals.png,$(MANSERVISI))
+ktwt: $(addsuffix /postProcessing/residuals/0/residuals.png,$(KTWT))
 
 ahfm: $(addsuffix /postProcessing/residuals/0/residuals.png,$(AHFM))
 
@@ -73,6 +76,10 @@ $(foreach c, $(AHFM),\
 $(foreach c, $(MANSERVISI),\
 	$(eval $(call caserule2a, $(c),\
 		$(shell sed -e's!/manservisi/Pr[0-9.]*/!/reAnalogy/!' <<<"$(c)"))))
+
+$(foreach c, $(KTWT),\
+	$(eval $(call caserule2a, $(c),\
+		$(shell sed -e's!/kt-wt/Pr[0-9.]*/!/reAnalogy/!' <<<"$(c)"))))
 
 $(foreach c, $(KAY),\
 	$(eval $(call caserule2a, $(c),\
@@ -148,6 +155,9 @@ clean_kay:
 
 clean_manservisi:
 	@for case in $(MANSERVISI); do pushd $$case; ./Allclean; popd; done
+
+clean_ktwt:
+	@for case in $(KTWT); do pushd $$case; ./Allclean; popd; done
 
 clean_ahfm:
 	@for case in $(AHFM); do pushd $$case; ./Allclean; popd; done
