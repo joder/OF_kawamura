@@ -3,7 +3,7 @@ set logscale y
 set format y "10^{%2T}"
 set ytic 1e-16,10,1e8
 set mytics 10
-set xlabel "Time / s"
+set xlabel "Iteration / 100"
 
 set key tmargin horizontal
 
