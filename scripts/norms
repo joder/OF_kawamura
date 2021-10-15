@@ -52,6 +52,8 @@ norm() {
 	local case="$2"
 	local file="$3"
 	local field="$4"
+	local pvar="$var"
+	local regex="/Pr([0-9.]+)/"
 	
 	case "$var" in
 		U)
@@ -86,22 +88,32 @@ norm() {
 				'$1<=h{printf "%24.16e%24.16e\n", $1/h*ret, $f/nu}' \
 				"$file") | tail -n -1)"
 			;;
+		T)
+			if [[ "$file" =~ $regex ]]; then
+				var="T${BASH_REMATCH[1]/./}"
+				prfactor=-
+			else
+				var="T0025"
+				prfactor=-
+			fi
+			;&
 		T[0-9]*)
 			out="$(\
 			python3 ./scripts/diff.py \
 			<(awk -v pr="${pr[$var]}" '!/^ j/{printf "%24.16e%24.16e\n",$2,$3/pr}' "$kawamura/${dnssrc[$var]}") \
-			<(awk -v h="$h" -v ret="$ret" -v nu="$nu" -v f="$field" -v pr="${pr[$var]}"\
+			<(awk -v h="$h" -v ret="$ret" -v nu="$nu" -v f="$field" -v pr="$prfactor${pr[$var]}"\
 			'$1==0{t0=$f;printf "%24.16e%24.16e\n", 0, 0;next}$1<=h{printf "%24.16e%24.16e\n", $1/h*ret, ($f-t0)/pr}' \
 				"$file") | tail -n -1)"
+			prfactor=""
 			;;
 		*)
 			return
 			;;
 	esac
-	printf '%10s%30s %s\n' "$var" "$case" "$out"
+	printf '%10s%6s%60s %s\n' "$pvar" "${pr[$var]}" "$case" "$out"
 }
 
-printf '%10s%30s %15s%15s%15s%15s%15s%15s\n' Variable Case L1 L1_rel L2 L2_rel Linf Linf_rel
+printf '%10s%6s%60s %15s%15s%15s%15s%15s%15s\n' Variable Pr Case L1 L1_rel L2 L2_rel Linf Linf_rel
 for case; do
 	time="$(foamListTimes -case "$case" -latestTime)"
 	for file in "$case/postProcessing/singleGraph/$time"/line_*.xy; do
