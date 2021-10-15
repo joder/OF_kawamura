@@ -1,10 +1,10 @@
-rp(i)=(i<3?'line_p_T_k_epsilon_nut_T0025_T071.xy':(i==3?'line_p_T_k_omega_nut_T0025_T071.xy':(i==4?'line_p_T_k_omega_nut_alphat.xy':(i==5?'line_p_T_k_omega_nut_alphat_kt_epsilont.xy':'line_p_T_k_omega_nut_alphat_kt.xy'))))
+rp(i)=(i<3?'line_p_T_k_epsilon_nut_T0025_T071.xy':(i==3?'line_p_T_k_omega_nut_T0025_T071.xy':(i==4?'line_p_T_k_omega_nut_alphat.xy':(i==5?'line_p_T_k_omega_nut_alphat_kt_epsilont.xy':(i==6?'line_p_T_k_omega_nut_alphat_kt.xy':'line_p_T_k_omega_nut_alphat_kt_omegat.xy')))))
 
 prn(i)=word('0.025 0.71',i)+0
 prs(i)=word('Pr0.025 Pr0.71',i)
-fld(i)=(i<4?word("../bulk/LSkEps ../tau/LSkEps ../bulk/kOmegaSST/reAnalogy",i):(i==4?"../bulk/kOmegaSST/kay":(i==5?"../bulk/kOmegaSST/manservisi":(i==6?"../bulk/kOmegaSST/AHFM":""))))
+fld(i)=(i<4?word("../bulk/LSkEps ../tau/LSkEps ../bulk/kOmegaSST/reAnalogy",i):(i==4?"../bulk/kOmegaSST/kay":(i==5?"../bulk/kOmegaSST/manservisi":(i==6?"../bulk/kOmegaSST/AHFM":(i==7?"../bulk/kOmegaSST/kt-wt":"")))))
 dir(i,pr)=(i<4?sprintf('%s/mesh5',fld(i)):sprintf('%s/%s/mesh5',fld(i),prs(pr)))
-titl(i)=(i==1?"LS k-{/Symbol e}":(i==2?"LS k-{/Symbol e} tau":(i==3?"k-{/Symbol w} SST":(i==4?"Kays":(i==5?"Manservisi":(i==6?"AHFM":""))))))
+titl(i)=(i==1?"LS k-{/Symbol e}":(i==2?"LS k-{/Symbol e} tau":(i==3?"k-{/Symbol w} SST":(i==4?"Kays":(i==5?"Manservisi k-{/Symbol e}":(i==6?"AHFM":(i==7?"Manservisi k-{/Symbol w}":"")))))))
 times(i,pr)=system(sprintf("foamListTimes -case '%s' -latestTime",dir(i,pr)))
 srcp(i,pr)=sprintf('%s/postProcessing/singleGraph/%s/%s',dir(i,pr),times(i,pr),rp(i))
 col(i,pr)=(i>3?3:pr+6)
@@ -14,7 +14,7 @@ wMesh="l"
 wDNS="p"
 lsDNS=1
 lsT1=7
-N=6
+N=7
 
 set linestyle 1 lc rgb "black"
 set linestyle 2 lw 1.5 lc rgb "red"
@@ -22,4 +22,5 @@ set linestyle 3 lw 1.5 lc rgb "blue"
 set linestyle 4 lw 1.5 lc rgb "magenta"
 set linestyle 5 lw 1.5 lc rgb "green"
 set linestyle 6 lw 1.5 lc rgb "orange"
-set linestyle 7 lw 1.5 lc rgb "yellow"
+set linestyle 7 lw 1.5 lc rgb "skyblue"
+set linestyle 8 lw 1.5 lc rgb "dark-green"
