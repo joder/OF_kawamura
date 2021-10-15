@@ -10,7 +10,7 @@ application=$(getApplication)
 
 runApplication blockMesh
 cp -r 0.orig/ 0
-runApplication mapFields "../../../reAnalogy/mesh4/" -consistent -sourceTime latestTime
+runApplication mapFields "../../../reAnalogy/mesh5/" -consistent -sourceTime latestTime
 ./scripts/scalarToT.awk -v name=T071 0/T071 > 0/T
 runApplication $application
 runApplication postProcess -func singleGraph
