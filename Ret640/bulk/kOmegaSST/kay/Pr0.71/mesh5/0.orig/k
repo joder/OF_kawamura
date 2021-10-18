@@ -31,12 +31,12 @@ boundaryField
     }
     bottom
     {
-        type        kqRWallFunction;
+        type        kLowReWallFunction;
         value       uniform     1e-10;
     }
     top
     {
-        type        kqRWallFunction;
+        type        kLowReWallFunction;
         value       uniform     1e-10;
     }
     frontAndBack
