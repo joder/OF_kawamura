@@ -10,3 +10,8 @@ done
 
 convert key.png -trim -border 1x1 -bordercolor white +repage key.png
 convert keyT.png -trim -border 1x1 -bordercolor white +repage keyT.png
+
+pushd ../..
+./scripts/norms 395 Ret395/tau/LSkEps/mesh4/ Ret395/bulk/LSkEps/mesh4/ Ret395/bulk/kOmegaSST/reAnalogy/mesh4/ Ret395/bulk/kOmegaSST/{manservisi,kay,AHFM,kt-wt}/*/mesh4 > Ret395/comparison/norms395.dat
+popd
+

@@ -10,3 +10,8 @@ done
 
 convert key.png -trim -border 1x1 -bordercolor white +repage key.png
 convert keyT.png -trim -border 1x1 -bordercolor white +repage keyT.png
+
+pushd ../..
+./scripts/norms 640 Ret640/tau/LSkEps/mesh5/ Ret640/bulk/LSkEps/mesh5/ Ret640/bulk/kOmegaSST/reAnalogy/mesh5/ Ret640/bulk/kOmegaSST/{manservisi,kay,AHFM,kt-wt}/*/mesh5 > Ret640/comparison/norms640.dat
+popd
+
