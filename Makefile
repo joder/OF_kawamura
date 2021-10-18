@@ -50,6 +50,8 @@ KTWT:=$(addsuffix /mesh4,$(addprefix Ret395/bulk/kOmegaSST/kt-wt/Pr,0.025 0.71 1
 KTWT+=$(addsuffix /mesh5,$(addprefix Ret640/bulk/kOmegaSST/kt-wt/Pr,0.025 0.71))
 AHFM:=$(addsuffix /mesh4,$(addprefix Ret395/bulk/kOmegaSST/AHFM/Pr,0.025 0.71 1 2 5 7 10))
 AHFM+=$(addsuffix /mesh5,$(addprefix Ret640/bulk/kOmegaSST/AHFM/Pr,0.025 0.71))
+NRGAHFM:=$(addsuffix /mesh4,$(addprefix Ret395/bulk/kOmegaSST/nrgAHFM/Pr,0.025 0.71 1 2 5 7 10))
+NRGAHFM+=$(addsuffix /mesh5,$(addprefix Ret640/bulk/kOmegaSST/nrgAHFM/Pr,0.025 0.71))
 ADD_CASES:=$(addprefix Ret640/bulk/epsWall/mesh,1 2 3 4 5)
 ADD_CASES+=$(addprefix Ret640/bulk/streamwise/mesh1-,2 3 4)
 ADD_CASES+=$(addprefix Ret640/bulk/streamwise/mesh4-,2 3 4)
@@ -58,7 +60,7 @@ RESIDUALS:=$(addsuffix /postProcessing/residuals/0/residuals.png,$(CASES))
 ADD_RESIDUALS:=$(addsuffix /postProcessing/residuals/0/residuals.png,$(ADD_CASES))
 
 all: cases
-allinall: all additional kay manservisi ahfm ktwt
+allinall: all additional kay manservisi ahfm ktwt nrgahfm
 cases: $(RESIDUALS)
 additional: $(ADD_RESIDUALS)
 
@@ -68,6 +70,11 @@ manservisi: $(addsuffix /postProcessing/residuals/0/residuals.png,$(MANSERVISI))
 ktwt: $(addsuffix /postProcessing/residuals/0/residuals.png,$(KTWT))
 
 ahfm: $(addsuffix /postProcessing/residuals/0/residuals.png,$(AHFM))
+nrgahfm: $(addsuffix /postProcessing/residuals/0/residuals.png,$(NRGAHFM))
+
+$(foreach c, $(NRGAHFM),\
+	$(eval $(call caserule2a, $(c),\
+		$(shell sed -e's!/nrgAHFM/!/manservisi/!' <<<"$(c)"))))
 
 $(foreach c, $(AHFM),\
 	$(eval $(call caserule2a, $(c),\
@@ -159,10 +166,13 @@ clean_manservisi:
 clean_ktwt:
 	@for case in $(KTWT); do pushd $$case; ./Allclean; popd; done
 
+clean_nrgahfm:
+	@for case in $(NRGAHFM); do pushd $$case; ./Allclean; popd; done
+
 clean_ahfm:
 	@for case in $(AHFM); do pushd $$case; ./Allclean; popd; done
 
-.PHONY: all cases kay manservisi ahfm allinall clean clean_cases plots clean_plots clean_kay clean_manservisi clean_ahfm
+.PHONY: all cases kay manservisi ahfm nrgahfm allinall clean clean_cases plots clean_plots clean_kay clean_manservisi clean_ahfm clean_nrgahfm
 
 
 $(call residual, Ret640/bulk/epsWall/mesh1):

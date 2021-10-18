@@ -1,0 +1,18 @@
+set style data l
+set logscale y
+set format y "10^{%2T}"
+set ytic 1e-16,10,1e8
+set mytics 10
+set xlabel "Iteration / 100"
+
+set key tmargin horizontal
+
+set terminal pngcairo enhanced
+set output "residuals.png"
+
+r='residuals.dat'
+colnames=system("awk '/^#/{a=gensub(/^#\\s*/,\"\",1)}!/^#/{print gensub(/_/,\"\\\\\\\\_\",1,a); exit}' residuals.dat")
+cols=system("awk '{c=NF}END{print c}' residuals.dat")
+
+plot\
+  for [i=2:cols] r u 1:i t word(colnames,i)

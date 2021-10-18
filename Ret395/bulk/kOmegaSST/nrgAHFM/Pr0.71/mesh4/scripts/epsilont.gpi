@@ -1,0 +1,31 @@
+if(ARGC!=2) {
+	print sprintf("Not enough arguments!\nUsage: gnuplot -c \"%s\" line_NAME.xy N\nExiting gnuplot", ARG0)
+	exit gnuplot
+}
+fn=ARG1
+col=ARG2+0
+
+epst(epstsim) = epstsim*(nu*Retau)/h**2
+
+load 'common.gpi'
+
+epsp(u,v,w)=(u+v+w)
+
+set ylabel '{/Symbol e}_{/Symbol q}^+'
+
+set output 'comp_epsilont.png'
+plot\
+  KB0025 u 1:(-$3) t 'Kawamura' ls 1 \
+, fn u (yp($1)):(epst(column(col))) t 'Current' ls 2
+
+set output 'comp_epsilont_semilog.png'
+set logscale x
+plot\
+  KB0025 u 1:(-$3) t 'Kawamura' ls 1 \
+, fn u (yplog($1)):(epst(column(col))) t 'Current' ls 2
+
+set output 'comp_epsilont_log.png'
+set logscale xy
+plot\
+  KB0025 u 1:(-$3) t 'Kawamura' ls 1 \
+, fn u (yp($1)):(epst(column(col))) t 'Current' ls 2
