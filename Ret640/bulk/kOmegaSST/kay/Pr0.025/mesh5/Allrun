@@ -11,6 +11,7 @@ application=$(getApplication)
 runApplication blockMesh
 cp -r 0.orig/ 0
 runApplication mapFields "../../../reAnalogy/mesh5/" -consistent -sourceTime latestTime
+./scripts/scalarToT.awk -v name=T0025 0/T0025 > 0/T
 runApplication $application
 runApplication postProcess -func singleGraph
 scripts/plots > log.plots 2>&1
