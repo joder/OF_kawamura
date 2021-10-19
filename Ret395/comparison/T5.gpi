@@ -2,6 +2,7 @@ load 'commonT.gpi'
 
 set ylabel 'T^{+} / Pr'
 npr=5
+set yrange [*:xr(npr)]
 
 temp(i,j)=subst(column(col(i,j)))/prn(j)*(i<4?1:-1)
 
