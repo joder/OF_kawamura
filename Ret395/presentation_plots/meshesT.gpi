@@ -1,0 +1,111 @@
+load 'parameters.gpi'
+
+N = 6
+titlestr(i,npr)=(i==1? 'Re analogy k-{/Symbol w} SST' :\
+                (i==2? 'Kays correlation' :\
+                (i==3? 'Manservisi k_{/Symbol q}-{/Symbol e}_{/Symbol q}' :\
+                (i==4? 'Manservisi k_{/Symbol q}-{/Symbol w}_{/Symbol q}' :\
+                (i==5? 'Kenjereš AHFM' :\
+                (i==6? 'AHFM-NRG+' :\
+                (i==7? 'Re analogy k-{/Symbol e}' :\
+                (i==8? 'Re analogy k-{/Symbol e} tau' :\
+                       '' ))))))))
+# Base filename
+casefn(i,npr)=(i==1? 'line_p_T_k_omega_nut_T0025_T071_T1_T2_T5_T7_T10.xy'   :\
+              (i==2? 'line_p_T_k_omega_nut_alphat.xy'                       :\
+              (i==3? 'line_p_T_k_omega_nut_alphat_kt_epsilont.xy'           :\
+              (i==4? 'line_p_T_k_omega_nut_alphat_kt_omegat.xy'             :\
+              (i==5? 'line_p_T_k_omega_nut_alphat_kt.xy'                    :\
+              (i==6? 'line_p_T_k_omega_nut_alphat_kt.xy'                    :\
+              (i==7? 'line_p_T_k_epsilon_nut_T0025_T071_T1_T2_T5_T7_T10.xy' :\
+              (i==8? 'line_p_T_k_epsilon_nut_T0025_T071_T1_T2_T5_T7_T10.xy' :\
+                     '' ))))))))
+prfld(npr)=word('Pr0.025 Pr0.71 Pr1 Pr2 Pr5 Pr7 Pr10',npr)
+prn(i)=word('0.025 0.71 1 2 5 7 10',i)+0
+# Base folder
+casebf(i,npr)='../' .\
+              (i==1? 'bulk/kOmegaSST/reAnalogy'              :\
+              (i==2? 'bulk/kOmegaSST/kay/'       .prfld(npr) :\
+              (i==3? 'bulk/kOmegaSST/manservisi/'.prfld(npr) :\
+              (i==4? 'bulk/kOmegaSST/kt-wt/'     .prfld(npr) :\
+              (i==5? 'bulk/kOmegaSST/AHFM/'      .prfld(npr) :\
+              (i==6? 'bulk/kOmegaSST/nrgAHFM/'   .prfld(npr) :\
+              (i==7? 'bulk/LSkEps'                           :\
+              (i==8? 'tau/LSkEps'                            :\
+                     '' )))))))) . '/mesh4'
+colT(i,npr)=(i==1? npr+6 :\
+            (i==2? 3     :\
+            (i==3? 3     :\
+            (i==4? 3     :\
+            (i==5? 3     :\
+            (i==6? 3     :\
+            (i==7? npr+6 :\
+            (i==8? npr+6 :\
+                   0 ))))))))
+colkt(i,npr)=(i==1? 0     :\
+             (i==2? 8     :\
+             (i==3? 8     :\
+             (i==4? 8     :\
+             (i==5? 8     :\
+             (i==6? 8     :\
+             (i==7? 0     :\
+             (i==8? 0     :\
+                    0 ))))))))
+colalphat(i,npr)=(i==1? 0     :\
+                 (i==2? 7     :\
+                 (i==3? 7     :\
+                 (i==4? 7     :\
+                 (i==5? 7     :\
+                 (i==6? 7     :\
+                 (i==7? 0     :\
+                 (i==8? 0     :\
+                        0 ))))))))
+colnut(i,npr)=(i==1? 6     :\
+              (i==2? 6     :\
+              (i==3? 6     :\
+              (i==4? 6     :\
+              (i==5? 6     :\
+              (i==6? 6     :\
+              (i==7? 6     :\
+              (i==8? 6     :\
+                     0 ))))))))
+
+colw(i,npr)=(i<=6? 5 : 0)
+colk(i,npr)=4
+coleps(i,npr)=(i<=6? 0 : 5)
+colU(i,npr)=2
+
+timefld(i,npr)=system(sprintf("foamListTimes -case '%s' -latestTime",casebf(i,npr)))
+filename(i,npr)=sprintf('%s/postProcessing/singleGraph/%s/%s',casebf(i,npr),timefld(i,npr),casefn(i,npr))
+
+casefnU(i,npr)=(i==1? 'line_U.xy'   :\
+               (i==2? 'line_U.xy'   :\
+               (i==3? 'line_U.xy'   :\
+               (i==4? 'line_U.xy'   :\
+               (i==5? 'line_U_Q.xy' :\
+               (i==6? 'line_U_Q.xy' :\
+               (i==7? 'line_U.xy'   :\
+               (i==8? 'line_U.xy'   :\
+                      '' ))))))))
+filenameU(i,npr)=sprintf('%s/postProcessing/singleGraph/%s/%s',casebf(i,npr),timefld(i,npr),casefnU(i,npr))
+
+first(x)=(($0==0?t0=x:x),x-t0)
+U(i,npr)=column(colU(i,npr))
+k(i,npr)=column(colk(i,npr))
+nut(i,npr)=column(colnut(i,npr))
+temp(i,npr)=first(column(colT(i,npr)))*(i==1?1:(i==7?1:(i==8?1:-1)))
+kt(i,npr)=column(colkt(i,npr))
+alphat(i,npr)=(i==1? column(colnut(1,npr))/0.85 :\
+              (i==2? column(colalphat(i,npr))   :\
+              (i==3? column(colalphat(i,npr))   :\
+              (i==4? column(colalphat(i,npr))   :\
+              (i==5? column(colalphat(i,npr))   :\
+              (i==6? column(colalphat(i,npr))   :\
+              (i==7? column(colnut(7,npr))/0.85 :\
+              (i==8? column(colnut(8,npr))/0.85 :\
+                     0 ))))))))
+epsilon(i,npr)=(i<=6? column(colw(i,npr))*column(colk(i,npr))*0.09 :\
+                      column(coleps(i,npr)))
+
+if(!exist("GPFUN_logscx")) logscx(x)=x
+if(!exist("GPFUN_logscy")) logscy(x)=x

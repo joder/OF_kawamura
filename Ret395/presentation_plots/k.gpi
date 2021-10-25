@@ -1,0 +1,20 @@
+npr=1
+load 'meshesT.gpi'
+
+set xlabel 'y^{+}'
+set ylabel 'k^{+}'
+
+set format y '%3.1f'
+
+set xrange [*:Retau]
+
+kDNS(u,v,w)=0.5*(u+v+w)
+
+yp(y)=y/h*Retau
+utau=nu/h*Retau
+kp(x)=x/utau**2
+
+plot\
+  Kk u 1:(kDNS($2,$3,$4)) w p t 'Kawamura' ls 1 \
+, for [i=1:1] filename(i,npr) u (logscx(yp($1))):(logscy(kp(k(i,npr)))) w l t titlestr(i,npr) ls i+1 \
+, for [i=7:8] filename(i,npr) u (logscx(yp($1))):(logscy(kp(k(i,npr)))) w l t titlestr(i,npr) ls i+1

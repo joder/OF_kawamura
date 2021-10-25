@@ -1,0 +1,15 @@
+npr=6
+Pr=7
+load 'meshesT.gpi'
+
+set ylabel 'T^{+} / Pr'
+set xlabel 'y^{+}'
+set yrange [*:25]
+set xrange [*:Retau]
+
+Tp(x)=x/Pr
+yp(y)=y/h*Retau
+
+plot\
+  KT7 u 2:(Tp($3)) w p t 'Kawamura' ls 1 \
+, for [i=1:N] filename(i,npr) u (logscx(yp($1))):(logscy(Tp(temp(i,npr)))) w l t titlestr(i,npr) ls i+1

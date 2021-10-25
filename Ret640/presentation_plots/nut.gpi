@@ -1,0 +1,14 @@
+npr=1
+load 'meshesT.gpi'
+
+set ylabel '{/Symbol n}_t^+'
+set xlabel 'y^{+}'
+set xrange [*:Retau]
+
+yp(y)=y/h*Retau
+nutp(x)=x/nu
+
+plot\
+  Knut2 u 1:2 w p t 'Kawamura' ls 1 \
+, for [i=1:1] filename(i,npr) u (logscx(yp($1))):(logscy(nutp(nut(i,npr)))) w l t titlestr(i,npr) ls i+1 \
+, for [i=7:8] filename(i,npr) u (logscx(yp($1))):(logscy(nutp(nut(i,npr)))) w l t titlestr(i,npr) ls i+1

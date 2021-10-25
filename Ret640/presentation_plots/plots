@@ -1,0 +1,21 @@
+#!/bin/bash
+
+base="${1:-$PWD}"
+kawamura="${base%/Ret640/*}/Ret640/Kawamura_data"
+
+export GNUPLOT_LIB="$kawamura"
+for i in {U,k,epsilon,nut,{alphat,T,kt}{0025,071}}.gpi; do
+	gnuplot -c png.gpi "$i" "${i%.gpi}.png"
+	gnuplot -c pngsemilog.gpi "$i" "${i%.gpi}-semilog.png"
+done
+
+for i in key{U,T,kt}.gpi; do
+	png="${i%.gpi}.png"
+	gnuplot -c png.gpi "$i" "$png"
+	convert "$png" -trim -border 1x1 -bordercolor white +repage "$png"
+done
+
+#pushd ../..
+#./scripts/norms 640 Ret640/tau/LSkEps/mesh4/ Ret640/bulk/LSkEps/mesh4/ Ret640/bulk/kOmegaSST/reAnalogy/mesh4/ Ret640/bulk/kOmegaSST/{manservisi,kay,AHFM,kt-wt}/*/mesh4 > Ret640/comparison/norms640.dat
+#popd
+

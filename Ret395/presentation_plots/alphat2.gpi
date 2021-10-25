@@ -1,0 +1,15 @@
+npr=4
+Pr=2
+load 'meshesT.gpi'
+
+set ylabel 'Pr {/Symbol a}_t^+'
+set xlabel 'y^{+}'
+set xrange [*:Retau]
+
+yp(y)=y/h*Retau
+alphatp(x)=x/nu
+a(x)=Pr*x
+
+plot\
+  at2 u 1:(a($2)) w p t 'Kawamura' ls 1 \
+, for [i=1:4] filename(i,npr) u (logscx(yp($1))):(logscy(a(alphatp(alphat(i,npr))))) w l t titlestr(i,npr) ls i+1

@@ -1,0 +1,20 @@
+if(ARGC!=2) {
+        print sprintf("Not enough arguments!\nUsage: gnuplot -c plot.gpi script.gpi out.png\nExiting gnuplot", ARG0)
+        exit gnuplot
+}
+infn=ARG1
+outfn=ARG2
+
+load 'style.gpi'
+
+unset key
+
+set logscale xy
+logscx(x)=(x==0?NaN:x)
+logscy(y)=(y==0?NaN:y)
+
+set terminal pngcairo enhanced
+
+set output outfn
+
+load infn
