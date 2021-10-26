@@ -15,7 +15,19 @@ for i in key{U,T,kt}.gpi; do
 	convert "$png" -trim -border 1x1 -bordercolor white +repage "$png"
 done
 
-#pushd ../..
-#./scripts/norms 395 Ret395/tau/LSkEps/mesh4/ Ret395/bulk/LSkEps/mesh4/ Ret395/bulk/kOmegaSST/reAnalogy/mesh4/ Ret395/bulk/kOmegaSST/{manservisi,kay,AHFM,kt-wt}/*/mesh4 > Ret395/comparison/norms395.dat
-#popd
+pushd ../..
+./scripts/norms 395 Ret395/tau/LSkEps/mesh4/ Ret395/bulk/LSkEps/mesh4/ Ret395/bulk/kOmegaSST/reAnalogy/mesh4/ Ret395/bulk/kOmegaSST/{manservisi,kay,AHFM,nrgAHFM,kt-wt}/*/mesh4 > Ret395/presentation_plots/norms395.dat
+popd
 
+awk 'BEGIN{FIXEDWIDTHS="10 6 60 16 15 15 15 15 15"}$3~/reAnalogy/   &&$1~/T[0-9]/{print $2,$5}' norms395.dat | sort -k1,1g > reAnalogykOmega.dat
+awk 'BEGIN{FIXEDWIDTHS="10 6 60 16 15 15 15 15 15"}$3~/bulk\/LSkEps/&&$1~/T[0-9]/{print $2,$5}' norms395.dat | sort -k1,1g > reAnalogyLSkEps.dat
+awk 'BEGIN{FIXEDWIDTHS="10 6 60 16 15 15 15 15 15"}$3~/tau\/LSkEps/ &&$1~/T[0-9]/{print $2,$5}' norms395.dat | sort -k1,1g > reAnalogytauLSkEps.dat
+awk 'BEGIN{FIXEDWIDTHS="10 6 60 16 15 15 15 15 15"}$3~/manservisi/  &&$1~/T$/{print $2,$5}'     norms395.dat | sort -k1,1g > manservisi.dat
+awk 'BEGIN{FIXEDWIDTHS="10 6 60 16 15 15 15 15 15"}$3~/kt-wt/       &&$1~/T$/{print $2,$5}'     norms395.dat | sort -k1,1g > kt-wt.dat
+awk 'BEGIN{FIXEDWIDTHS="10 6 60 16 15 15 15 15 15"}$3~/kay/         &&$1~/T$/{print $2,$5}'     norms395.dat | sort -k1,1g > kay.dat
+awk 'BEGIN{FIXEDWIDTHS="10 6 60 16 15 15 15 15 15"}$3~/\/AHFM/      &&$1~/T$/{print $2,$5}'     norms395.dat | sort -k1,1g > AHFM.dat
+awk 'BEGIN{FIXEDWIDTHS="10 6 60 16 15 15 15 15 15"}$3~/\/nrgAHFM/   &&$1~/T$/{print $2,$5}'     norms395.dat | sort -k1,1g > nrgAHFM.dat
+
+gnuplot -c pngerrors.gpi errors.gpi errors.png
+gnuplot -c pngerrors.gpi keyerrors.gpi keyerrors.png
+convert keyerrors.png -trim -border 1x1 -bordercolor white +repage keyerrors.png

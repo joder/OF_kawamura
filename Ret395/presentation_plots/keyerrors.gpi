@@ -1,0 +1,13 @@
+npr=1
+load 'meshesT.gpi'
+
+set key tmargin horizontal
+
+unset border
+unset tics
+
+set yrange [1:2]
+set xrange [1:2]
+
+plot\
+   for [i=1:N] NaN w lp t titlestr(i,npr) ls i+1

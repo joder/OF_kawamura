@@ -1,0 +1,10 @@
+npr=1
+load 'meshesT.gpi'
+
+set ylabel '{/Symbol e}'
+set xlabel 'Pr'
+
+cmp(i)=word("reAnalogykOmega.dat kay.dat manservisi.dat kt-wt.dat AHFM.dat nrgAHFM.dat reAnalogyLSkEps.dat reAnalogytauLSkEps.dat",i)
+
+plot\
+   for [i=1:N] cmp(i) u 1:2 w lp t titlestr(i,npr) ls i+1

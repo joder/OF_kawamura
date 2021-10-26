@@ -4,7 +4,7 @@ load 'meshesT.gpi'
 
 set ylabel 'T^{+} / Pr'
 set xlabel 'y^{+}'
-set yrange [*:25]
+set yrange [*:10]
 set xrange [*:Retau]
 
 Tp(x)=x/Pr

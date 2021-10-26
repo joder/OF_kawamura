@@ -1,0 +1,25 @@
+if(ARGC!=2) {
+        print sprintf("Not enough arguments!\nUsage: gnuplot -c plot.gpi script.gpi out.png\nExiting gnuplot", ARG0)
+        exit gnuplot
+}
+infn=ARG1
+outfn=ARG2
+
+set linestyle 1 ps 1.5 lc rgb "black"
+set linestyle 2 lw 1.0 dt "." ps 1.5 lc rgb "black"
+set linestyle 3 lw 1.0 dt "." ps 1.5 lc rgb "green"
+set linestyle 4 lw 1.0 dt "." ps 1.5 lc rgb "red"
+set linestyle 5 lw 1.0 dt "." ps 1.5 lc rgb "orange"
+set linestyle 6 lw 1.0 dt "." ps 1.5 lc rgb "skyblue"
+set linestyle 7 lw 1.0 dt "." ps 1.5 lc rgb "blue"
+set linestyle 8 lw 1.0 dt "." ps 1.5 lc rgb "magenta"
+set linestyle 9 lw 1.0 dt "." ps 1.5 lc rgb "dark-yellow"
+unset key
+
+set logscale xy
+
+set terminal pngcairo enhanced
+
+set output outfn
+
+load infn
