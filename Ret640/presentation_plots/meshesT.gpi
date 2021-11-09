@@ -6,7 +6,7 @@ titlestr(i,npr)=(i==1? 'Re analogy k-{/Symbol w} SST' :\
                 (i==3? 'Manservisi k_{/Symbol q}-{/Symbol e}_{/Symbol q}' :\
                 (i==4? 'Manservisi k_{/Symbol q}-{/Symbol w}_{/Symbol q}' :\
                 (i==5? 'Kenjereš AHFM' :\
-                (i==6? 'AHFM-NRG+' :\
+                (i==6? 'AHFM-NRG' :\
                 (i==7? 'Re analogy k-{/Symbol e}' :\
                 (i==8? 'Re analogy k-{/Symbol e} tau' :\
                        '' ))))))))
