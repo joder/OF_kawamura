@@ -1,0 +1,19 @@
+#!/bin/bash
+
+cd ${0%/*} || exit 1    # Run from this directory
+
+# Source tutorial run functions
+. $WM_PROJECT_DIR/bin/tools/RunFunctions
+
+# Set application name
+application=$(getApplication)
+
+runApplication blockMesh
+cp -r 0.orig/ 0
+runApplication mapFields "../../../reAnalogy/mesh4/" -consistent -sourceTime latestTime
+./scripts/scalarToT.awk -v name=T5 0/T5 > 0/T
+runApplication $application
+runApplication postProcess -func singleGraph
+scripts/plots > log.plots 2>&1
+
+#------------------------------------------------------------------------------
