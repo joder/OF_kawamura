@@ -1,0 +1,16 @@
+npr=1
+load 'meshesT.gpi'
+
+set key tmargin horizontal
+
+unset border
+unset tics
+unset xlabel
+
+set yrange [0:1]
+set xrange [0:1]
+
+plot\
+  NaN w p t 'Kawamura' ls 1 \
+, for [i=1:1] NaN w l t titlestr(i,npr) ls i+1 \
+, for [i=7:8] NaN w l t titlestr(i,npr) ls i+1 \

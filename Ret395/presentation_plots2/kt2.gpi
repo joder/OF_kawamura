@@ -1,0 +1,16 @@
+npr=4
+Pr=2
+load 'meshesT.gpi'
+
+set ylabel 'k_{/Symbol q}^+'
+set xlabel 'y^{+}'
+set yrange [*:10]
+set xrange [*:Retau]
+
+yp(y)=y/h*Retau
+ktDNS(x)=0.5*x**2
+ktp(x)=x
+
+plot\
+  KT2 u 2:(ktDNS($4)) w p t 'Kawamura' ls 1 \
+, for [i=3:6] filename(i,npr) u (logscx(yp($1))):(logscy(ktp(kt(i,npr)))) w l t titlestr(i,npr) ls i+1
